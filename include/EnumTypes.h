@@ -9,4 +9,16 @@ enum TokenType
         TokenType_Argend
 };
 
+enum FireOp
+{
+        FireOp_nil,
+        FireOp_Add
+};
+
+enum TokzState
+{
+        TokzState_Base,
+        TokzState_Comment
+};
+
 #endif
