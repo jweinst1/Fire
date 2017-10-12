@@ -11,14 +11,7 @@ TokzState Tokenizer_getState()
         return Tokenizer_STATE;
 }
 
-FireOp Tokenizer_detOp(const char* ch)
-{
-        switch(*ch)
-        {
-        default:
-                return FireOp_nil;
-        }
-}
+
 
 void Tokenizer_Tokenize(const char* ch)
 {
