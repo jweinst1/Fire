@@ -16,7 +16,7 @@ isNameStart(char ch)
 
 int isOpChar(char ch);
 
-void Tokenizer_Tokenize(const char* ch, char** position, Token* token);
+void Tokenizer_Tokenize(char* ch, char** position, Token* token);
 
 
 
