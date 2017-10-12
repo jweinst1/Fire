@@ -1,13 +1,6 @@
 #ifndef FIRE_ENUMTYPES_HEAD
 #define FIRE_ENUMTYPES_HEAD
 
-typedef enum TokenType
-{
-        TokenType_Operation,
-        TokenType_Number,
-        TokenType_Argbegin,
-        TokenType_Argend
-} TokenType;
 
 typedef enum FireOp
 {

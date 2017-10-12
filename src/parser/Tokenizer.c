@@ -1,38 +1,103 @@
 #include "Tokenizer.h"
 
-static TokzState Tokenizer_STATE = TokzState_Base;
 
-void Tokenizer_setState(TokzState state)
+int isOpChar(char ch)
 {
-        Tokenizer_STATE = state;
-}
-TokzState Tokenizer_getState()
-{
-        return Tokenizer_STATE;
-}
-
-
-
-void Tokenizer_Tokenize(const char* ch)
-{
-        while(*ch)
+        switch(ch)
         {
-                switch(Tokenizer_STATE)
-                {
-                case TokzState_Base:
-                        if(*ch == '#')
-                        {
-                                Tokenizer_STATE = TokzState_Comment;
-                                ch++;
-                        }
-                        break;
-                case TokzState_Comment:
-                        if(*ch == '\n')
-                        {
-                                Tokenizer_STATE = TokzState_Base;
-                                ch++;
-                        }
-                        break;
-                }
+        case '+': return 1;
+        case '-': return 1;
+        case '*': return 1;
+        case '/': return 1;
+        case '%': return 1;
+        case '!': return 1;
+        case '&': return 1;
+        case '>': return 1;
+        case '=': return 1;
+        case '<': return 1;
+        case '?': return 1;
+        default:  return 0;
+        }
+}
+
+
+void Tokenizer_Tokenize(const char* ch, char** position, Token* token)
+{
+        switch(*ch)
+        {
+        case '0':
+                break;
+        case '1':
+                break;
+        case '2':
+                break;
+        case '3':
+                break;
+        case '4':
+                break;
+        case '5':
+                break;
+        case '6':
+                break;
+        case '7':
+                break;
+        case '8':
+                break;
+        case '9':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        case '0':
+                break;
+        default:
+                token->type = TokenType_nil;
         }
 }
