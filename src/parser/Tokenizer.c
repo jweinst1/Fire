@@ -1,4 +1,5 @@
 #include "Tokenizer.h"
+#include "stdlib.h"
 
 
 int isOpChar(char ch)
@@ -23,81 +24,43 @@ int isOpChar(char ch)
 
 void Tokenizer_Tokenize(const char* ch, char** position, Token* token)
 {
+        while(isspace(*ch)) ch++;
         switch(*ch)
         {
         case '0':
-                break;
         case '1':
-                break;
         case '2':
-                break;
         case '3':
-                break;
         case '4':
-                break;
         case '5':
-                break;
         case '6':
-                break;
         case '7':
-                break;
         case '8':
-                break;
         case '9':
+                token->val.number = strtod(ch, position);
+                token->type = TokenType_Number;
                 break;
-        case '0':
+        case '-':
+                if(isdigit(*(ch + 1)))
+                {
+                        token->val.number = strtod(ch, position);
+                        token->type = TokenType_Number;
+                }
+                else
+                {
+                        token->type = TokenType_Sub;
+                }
                 break;
-        case '0':
+        case ';':
+                token->type = TokenType_EndCall;
+                *position = ch + 1;
                 break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
-                break;
-        case '0':
+        case '+':
+                token->type = TokenType_Add;
+                *position = ch + 1;
                 break;
         default:
                 token->type = TokenType_nil;
+                *position = ch + 1;
         }
 }

@@ -12,7 +12,9 @@ enum TokenType
 {
         TokenType_nil,
         TokenType_Add,
-        TokenType_Number
+        TokenType_Sub,
+        TokenType_Number,
+        TokenType_EndCall
 };
 
 typedef enum TokenType TokenType;

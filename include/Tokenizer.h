@@ -14,6 +14,8 @@ isNameStart(char ch)
         return isalpha(ch) || ch == '_' || ch == '$';
 }
 
+int isOpChar(char ch);
+
 void Tokenizer_Tokenize(const char* ch, char** position, Token* token);
 
 
