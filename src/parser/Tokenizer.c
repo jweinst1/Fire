@@ -4,11 +4,11 @@ static TokzState Tokenizer_STATE = TokzState_Base;
 
 void Tokenizer_setState(TokzState state)
 {
-
+        Tokenizer_STATE = state;
 }
 TokzState Tokenizer_getState()
 {
-
+        return Tokenizer_STATE;
 }
 
 FireOp Tokenizer_detOp(const char* ch)
@@ -29,14 +29,14 @@ void Tokenizer_Tokenize(const char* ch)
                 case TokzState_Base:
                         if(*ch == '#')
                         {
-                                state = TokzState_Comment;
+                                Tokenizer_STATE = TokzState_Comment;
                                 ch++;
                         }
                         break;
                 case TokzState_Comment:
                         if(*ch == '\n')
                         {
-                                state = TokzState_Base;
+                                Tokenizer_STATE = TokzState_Base;
                                 ch++;
                         }
                         break;

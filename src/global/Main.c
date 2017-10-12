@@ -3,5 +3,6 @@
 
 int main( int argc, char *argv[] )
 {
-  return 0;
+        printf("Foobar\n");
+        return 0;
 }

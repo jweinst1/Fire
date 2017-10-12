@@ -1,24 +1,24 @@
 #ifndef FIRE_ENUMTYPES_HEAD
 #define FIRE_ENUMTYPES_HEAD
 
-enum TokenType
+typedef enum TokenType
 {
         TokenType_Operation,
         TokenType_Number,
         TokenType_Argbegin,
         TokenType_Argend
-};
+} TokenType;
 
-enum FireOp
+typedef enum FireOp
 {
         FireOp_nil,
         FireOp_Add
-};
+} FireOp;
 
-enum TokzState
+typedef enum TokzState
 {
         TokzState_Base,
         TokzState_Comment
-};
+} TokzState;
 
 #endif
