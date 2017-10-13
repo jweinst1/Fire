@@ -1,7 +1,7 @@
 #ifndef FIRE_TOKENIZER_H
 #define FIRE_TOKENIZER_H
 
-#include "ctype.h"
+#include <ctype.h>
 #include "Token.h"
 #include "EnumTypes.h"
 

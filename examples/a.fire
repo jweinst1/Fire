@@ -1,0 +1,19 @@
+# Fire example
+
+# with parenthesis
+(5)->(+ 3 4)
+   ->(print)
+       ->(- 1 2 3)
+           ->(end)
+
+# without parenthesis
+5 -> + 3 4
+    -> print
+       -> - 1 2 3
+          -> end
+
+
+5
+-> + 3 4
+-> print
+-> stop
