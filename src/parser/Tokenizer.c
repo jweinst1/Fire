@@ -49,6 +49,7 @@ void Tokenizer_Tokenize(char* ch, char** position, Token* token)
                 else
                 {
                         token->type = TokenType_Sub;
+                        *position = ch + 1;
                 }
                 break;
         case ';':
@@ -59,6 +60,17 @@ void Tokenizer_Tokenize(char* ch, char** position, Token* token)
                 token->type = TokenType_Add;
                 *position = ch + 1;
                 break;
+        case '(':
+                token->type = TokenType_ArgBegin;
+                *position = ch + 1;
+                break;
+        case ')':
+                token->type = TokenType_ArgEnd;
+                *position = ch + 1;
+                break;
+        case '.':
+                token->type = TokenType_ExtCall;
+                *position = ch + 1;
         default:
                 token->type = TokenType_nil;
                 *position = ch + 1;
