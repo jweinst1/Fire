@@ -46,6 +46,11 @@ void Tokenizer_Tokenize(char* ch, char** position, Token* token)
                         token->val.number = strtod(ch, position);
                         token->type = TokenType_Number;
                 }
+                else if(*(ch + 1) == '>')
+                {
+                        token->type = TokenType_ApplyNext;
+                        *position = ch + 2;
+                }
                 else
                 {
                         token->type = TokenType_Sub;
@@ -60,17 +65,6 @@ void Tokenizer_Tokenize(char* ch, char** position, Token* token)
                 token->type = TokenType_Add;
                 *position = ch + 1;
                 break;
-        case '(':
-                token->type = TokenType_ArgBegin;
-                *position = ch + 1;
-                break;
-        case ')':
-                token->type = TokenType_ArgEnd;
-                *position = ch + 1;
-                break;
-        case '.':
-                token->type = TokenType_ExtCall;
-                *position = ch + 1;
         default:
                 token->type = TokenType_nil;
                 *position = ch + 1;

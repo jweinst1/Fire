@@ -14,9 +14,7 @@ enum TokenType
         TokenType_Add,
         TokenType_Sub,
         TokenType_Number,
-        TokenType_ArgBegin,
-        TokenType_ArgEnd,
-        TokenType_ExtCall,
+        TokenType_ApplyNext,
         TokenType_EndCall
 };
 
