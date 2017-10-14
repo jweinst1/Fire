@@ -15,7 +15,7 @@ enum TokenType
         TokenType_Sub,
         TokenType_Number,
         TokenType_ApplyNext,
-        TokenType_EndCall
+        TokenType_Out
 };
 
 typedef enum TokenType TokenType;

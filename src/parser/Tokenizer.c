@@ -41,12 +41,12 @@ void Tokenizer_Tokenize(char* ch, char** position, Token* token)
                 token->type = TokenType_Number;
                 break;
         case '-':
-                if(isdigit(*(ch + 1)))
+                if(isdigit(ch[1]))
                 {
                         token->val.number = strtod(ch, position);
                         token->type = TokenType_Number;
                 }
-                else if(*(ch + 1) == '>')
+                else if(ch[1] == '>')
                 {
                         token->type = TokenType_ApplyNext;
                         *position = ch + 2;
@@ -57,13 +57,27 @@ void Tokenizer_Tokenize(char* ch, char** position, Token* token)
                         *position = ch + 1;
                 }
                 break;
-        case ';':
-                token->type = TokenType_EndCall;
-                *position = ch + 1;
-                break;
         case '+':
                 token->type = TokenType_Add;
                 *position = ch + 1;
+                break;
+        case 'o':
+                switch(ch[1])
+                {
+                case 'u':
+                        switch(ch[2])
+                        {
+                        case 't':
+                                token->type = TokenType_Out;
+                                *position = ch + 3;
+                                return;
+                        default:
+                                break;
+                        }
+                        break;
+                default:
+                        break;
+                }
                 break;
         default:
                 token->type = TokenType_nil;
