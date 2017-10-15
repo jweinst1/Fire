@@ -3,7 +3,6 @@
 
 #include <ctype.h>
 #include "Token.h"
-#include "EnumTypes.h"
 
 #define Tokenizer_NAME_START(ch) (isalpha(ch) || ch == '_')
 
