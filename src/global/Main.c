@@ -1,13 +1,31 @@
 #include <stdio.h>
 #include "Tokenizer.h"
+#include "Exec.h"
 
 int main( int argc, char *argv[] )
 {
-        char* code = "  \n\n  \n  -56e";
-        char** marker = &code;
-        Token tok = {0};
-        Tokenizer_Tokenize(code, marker, &tok);
-        printf("%d\n", (int)tok.val.number);
-        printf("%c\n", *code);
+        char* code = "6 -> + 4 -> out";
+        Token tok;
+        Executor exec;
+        Exec_DEFAULT(exec);
+        Tokenizer_Tokenize(code, &code, &tok);
+        Exec_execute(&exec, &tok);
+
+        Tokenizer_Tokenize(code, &code, &tok);
+        Exec_execute(&exec, &tok);
+
+
+        Tokenizer_Tokenize(code, &code, &tok);
+        Exec_execute(&exec, &tok);
+
+        Tokenizer_Tokenize(code, &code, &tok);
+        Exec_execute(&exec, &tok);
+
+        Tokenizer_Tokenize(code, &code, &tok);
+        Exec_execute(&exec, &tok);
+
+        Tokenizer_Tokenize(code, &code, &tok);
+        Exec_execute(&exec, &tok);
+
         return 0;
 }

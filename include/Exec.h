@@ -3,6 +3,10 @@
 
 #include "Token.h"
 
+//configures an executor for default settings
+#define Exec_DEFAULT(name) do { \
+                name.state = ExecState_AccValue; } while(0)
+
 #define Exec_SET_NUM(exc, num) do { \
                 exc->vState = ExecVState_Number; \
                 exc->val.number = num;} while(0)
@@ -24,6 +28,8 @@ enum ExecVState
 {
         ExecVState_Number
 };
+
+typedef enum ExecVState ExecVState;
 
 //stores the value the executor works on.
 //may need struct-based polymorphic approach in future

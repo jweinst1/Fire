@@ -1,19 +1,36 @@
 #include "Exec.h"
 #include <stdio.h>
+#include <stdlib.h>
 
+//if token is null, forms apply route based on current op
 void Exec_apply(Executor* executor, Token* token)
 {
-        switch(token->type)
+
+        switch(executor->op)
         {
-        case TokenType_Number:
-                switch(executor->op)
+        case TokenType_Add:
+                switch(executor->vState)
                 {
-                case TokenType_Add:
+                case ExecVState_Number:
                         executor->val.number += token->val.number;
-                        break;
-                case TokenType_Sub:
+                        return;
+                }
+                break;
+        case TokenType_Sub:
+                switch(executor->vState)
+                {
+                case ExecVState_Number:
                         executor->val.number -= token->val.number;
-                        break;
+                        return;
+                }
+                break;
+        case TokenType_Out:
+                switch(executor->vState)
+                {
+                case ExecVState_Number:
+                        printf("%d\n", (int)(executor->val.number));
+                        executor->state = ExecState_AccArrow;
+                        return;
                 }
                 break;
 
@@ -35,9 +52,9 @@ void Exec_execute(Executor* executor, Token* token)
                 {
                 case TokenType_Number:
                         executor->vState = ExecVState_Number;
-                        exc->val.number = token->val.number;
+                        executor->val.number = token->val.number;
                         executor->state = ExecState_AccArrow;
-                        break;
+                        return;
                 default:
                         executor->state = ExecState_nil;
                         return;
@@ -48,7 +65,7 @@ void Exec_execute(Executor* executor, Token* token)
                 {
                 case TokenType_ApplyNext:
                         executor->state = ExecState_AccOp;
-                        break;
+                        return;
                 default:
                         executor->state = ExecState_nil;
                         return;
@@ -58,17 +75,28 @@ void Exec_execute(Executor* executor, Token* token)
                 {
                 case TokenType_Add:
                 case TokenType_Sub:
-                case TokenType_Out:
                         executor->op = token->type;
                         executor->state = ExecState_AccArgs;
-                        break;
+                        return;
+                case TokenType_Out:
+                        executor->op = token->type;
+                        Exec_apply(executor, NULL);
+                        return;
                 default:
                         executor->state = ExecState_nil;
                         return;
                 }
                 break;
         case ExecState_AccArgs:
-                Exec_apply(executor, token);
+                switch(token->type)
+                {
+                case TokenType_ApplyNext:
+                        executor->state = ExecState_AccOp;
+                        return;
+                default:
+                        Exec_apply(executor, token);
+                        return;
+                }
                 break;
         }
 }
