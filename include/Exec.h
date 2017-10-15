@@ -12,6 +12,7 @@ enum ExecState
 {
         ExecState_nil, //0 state for errors
         ExecState_AccValue,
+        ExecState_AccArrow,
         ExecState_AccOp,
         ExecState_AccArgs
 };
@@ -43,6 +44,10 @@ struct Executor
 
 typedef struct Executor Executor;
 
+//function that applies an argument to a an executor/machine with an op and value
+void Exec_apply(Executor* executor, Token* token);
+
+//main function to apply new tokens to an executor
 void Exec_execute(Executor* executor, Token* token);
 
 #endif
