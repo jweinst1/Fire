@@ -13,6 +13,7 @@ enum TokenType
         TokenType_nil,
         TokenType_Add,
         TokenType_Sub,
+        TokenType_Mul,
         TokenType_Number,
         TokenType_ApplyNext,
         TokenType_Out

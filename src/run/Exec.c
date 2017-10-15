@@ -24,6 +24,14 @@ void Exec_apply(Executor* executor, Token* token)
                         return;
                 }
                 break;
+        case TokenType_Mul:
+                switch(executor->vState)
+                {
+                case ExecVState_Number:
+                        executor->val.number *= token->val.number;
+                        return;
+                }
+                break;
         case TokenType_Out:
                 switch(executor->vState)
                 {
@@ -75,6 +83,7 @@ void Exec_execute(Executor* executor, Token* token)
                 {
                 case TokenType_Add:
                 case TokenType_Sub:
+                case TokenType_Mul:
                         executor->op = token->type;
                         executor->state = ExecState_AccArgs;
                         return;

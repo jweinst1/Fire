@@ -61,6 +61,10 @@ void Tokenizer_Tokenize(char* ch, char** position, Token* token)
                 token->type = TokenType_Add;
                 *position = ch + 1;
                 break;
+        case '*':
+                token->type = TokenType_Mul;
+                *position = ch + 1;
+                break;
         case 'o':
                 switch(ch[1])
                 {
