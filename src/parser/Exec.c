@@ -45,7 +45,7 @@ void Exec_execute(Executor* executor, Token* token)
         switch(executor->state)
         {
         case ExecState_nil:
-                printf("An error has occurred, state: %d", executor->state);
+                printf("An error has occurred, op: %d\n", executor->op);
                 break;
         case ExecState_AccValue:
                 switch(token->type)
