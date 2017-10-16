@@ -9,44 +9,44 @@ void Exec_apply(Executor* executor, Token* token)
         switch(executor->op)
         {
         case TokenType_Add:
-                switch(executor->vState)
+                switch(executor->token.type)
                 {
-                case ExecVState_Number:
-                        executor->val.number += token->val.number;
+                case TokenType_Number:
+                        executor->token.val.number += token->val.number;
                         return;
                 }
                 break;
         case TokenType_Sub:
-                switch(executor->vState)
+                switch(executor->token.type)
                 {
-                case ExecVState_Number:
-                        executor->val.number -= token->val.number;
+                case TokenType_Number:
+                        executor->token.val.number -= token->val.number;
                         return;
                 }
                 break;
         case TokenType_Mul:
-                switch(executor->vState)
+                switch(executor->token.type)
                 {
-                case ExecVState_Number:
-                        executor->val.number *= token->val.number;
+                case TokenType_Number:
+                        executor->token.val.number *= token->val.number;
                         return;
                 }
                 break;
         case TokenType_Div:
-                switch(executor->vState)
+                switch(executor->token.type)
                 {
-                case ExecVState_Number:
-                        executor->val.number /= token->val.number;
+                case TokenType_Number:
+                        executor->token.val.number /= token->val.number;
                         return;
                 }
                 break;
         case TokenType_Out:
-                switch(executor->vState)
+                switch(executor->token.type)
                 {
-                case ExecVState_Number:
+                case TokenType_Number:
                         if(Exec_IS_INT(executor))
-                                printf("%d\n", (int)(executor->val.number));
-                        else printf("%f\n", executor->val.number);
+                                printf("%d\n", (int)(executor->token.val.number));
+                        else printf("%f\n", executor->token.val.number);
                         executor->state = ExecState_AccArrow;
                         return;
                 }
@@ -69,8 +69,8 @@ void Exec_execute(Executor* executor, Token* token)
                 switch(token->type)
                 {
                 case TokenType_Number:
-                        executor->vState = ExecVState_Number;
-                        executor->val.number = token->val.number;
+                        executor->token.type = TokenType_Number;
+                        executor->token.val.number = token->val.number;
                         executor->state = ExecState_AccArrow;
                         return;
                 default:

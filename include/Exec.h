@@ -13,7 +13,7 @@
                 exc->vState = ExecVState_Number; \
                 exc->val.number = num;} while(0)
 
-#define Exec_IS_INT(exc) (exc->val.number - floor(exc->val.number) == 0.0)
+#define Exec_IS_INT(exc) (exc->token.val.number - floor(exc->token.val.number) == 0.0)
 
 //error handling done by setting state to nil, triggering error on next token.
 enum ExecState
@@ -27,14 +27,6 @@ enum ExecState
 
 typedef enum ExecState ExecState;
 
-//enum needed to keep track of what kind of value the executor holds
-enum ExecVState
-{
-        ExecVState_Number
-};
-
-typedef enum ExecVState ExecVState;
-
 //stores the value the executor works on.
 //may need struct-based polymorphic approach in future
 //uses token val union to be consistent with incoming tokens.
@@ -42,8 +34,7 @@ typedef union TokenVal ExecValue;
 
 struct Executor
 {
-        ExecValue val;
-        ExecVState vState;
+        Token token;
         ExecState state;
         TokenType op;
         int skipCount; //used for control tokens

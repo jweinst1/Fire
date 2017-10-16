@@ -11,6 +11,7 @@
 enum TokenType
 {
         TokenType_nil,
+        TokenType_Self,
         TokenType_Add,
         TokenType_Sub,
         TokenType_Mul,
