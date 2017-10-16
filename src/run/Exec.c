@@ -32,11 +32,21 @@ void Exec_apply(Executor* executor, Token* token)
                         return;
                 }
                 break;
+        case TokenType_Div:
+                switch(executor->vState)
+                {
+                case ExecVState_Number:
+                        executor->val.number /= token->val.number;
+                        return;
+                }
+                break;
         case TokenType_Out:
                 switch(executor->vState)
                 {
                 case ExecVState_Number:
-                        printf("%d\n", (int)(executor->val.number));
+                        if(Exec_IS_INT(executor))
+                                printf("%d\n", (int)(executor->val.number));
+                        else printf("%f\n", executor->val.number);
                         executor->state = ExecState_AccArrow;
                         return;
                 }
@@ -84,6 +94,7 @@ void Exec_execute(Executor* executor, Token* token)
                 case TokenType_Add:
                 case TokenType_Sub:
                 case TokenType_Mul:
+                case TokenType_Div:
                         executor->op = token->type;
                         executor->state = ExecState_AccArgs;
                         return;

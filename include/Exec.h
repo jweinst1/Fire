@@ -2,14 +2,18 @@
 #define FIRE_EXEC_H
 
 #include "Token.h"
+#include <math.h>
 
 //configures an executor for default settings
 #define Exec_DEFAULT(name) do { \
-                name.state = ExecState_AccValue; } while(0)
+                name.state = ExecState_AccValue; \
+                name.skipCount = 0; } while(0)
 
 #define Exec_SET_NUM(exc, num) do { \
                 exc->vState = ExecVState_Number; \
                 exc->val.number = num;} while(0)
+
+#define Exec_IS_INT(exc) (exc->val.number - floor(exc->val.number) == 0.0)
 
 //error handling done by setting state to nil, triggering error on next token.
 enum ExecState
@@ -46,6 +50,7 @@ struct Executor
         ExecVState vState;
         ExecState state;
         TokenType op;
+        int skipCount; //used for control tokens
 };
 
 typedef struct Executor Executor;

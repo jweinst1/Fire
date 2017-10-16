@@ -14,6 +14,7 @@ enum TokenType
         TokenType_Add,
         TokenType_Sub,
         TokenType_Mul,
+        TokenType_Div,
         TokenType_Number,
         TokenType_ApplyNext,
         TokenType_Out
