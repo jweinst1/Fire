@@ -37,12 +37,8 @@ typedef enum ExecVState ExecVState;
 
 //stores the value the executor works on.
 //may need struct-based polymorphic approach in future
-union ExecValue
-{
-        double number;
-};
-
-typedef union ExecValue ExecValue;
+//uses token val union to be consistent with incoming tokens.
+typedef union TokenVal ExecValue;
 
 struct Executor
 {

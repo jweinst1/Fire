@@ -25,7 +25,6 @@ typedef enum TokenType TokenType;
 union TokenVal
 {
         double number;
-
 };
 
 typedef union TokenVal TokenVal;
