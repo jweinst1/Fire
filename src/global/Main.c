@@ -3,8 +3,7 @@
 
 int main( int argc, char *argv[] )
 {
-        char* code = "6 -> + 4 -> - 5 -> / 9 -> out -> + 1 2 -> out";
-        Compile_compile(code);
-
+        //compiles first argument of a quote for fire
+        Compile_compile(argv[1]);
         return 0;
 }
