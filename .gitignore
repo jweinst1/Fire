@@ -51,5 +51,8 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# apple files
+.DS_Store
+
 # compiled
 bin/
