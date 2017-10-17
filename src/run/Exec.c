@@ -2,19 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "Arithmetic.h"
+
 //if token is null, forms apply route based on current op
 void Exec_apply(Executor* executor, Token* token)
 {
-
+        Token* eToken = &executor->token;
         switch(executor->op)
         {
         case TokenType_Add:
-                switch(executor->token.type)
-                {
-                case TokenType_Number:
-                        executor->token.val.number += token->val.number;
-                        return;
-                }
+                Token_ADD(eToken, token);
                 break;
         case TokenType_Sub:
                 switch(executor->token.type)
