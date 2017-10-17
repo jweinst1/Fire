@@ -1,6 +1,8 @@
 #ifndef FIRE_ARITHMETIC_H
 #define FIRE_ARITHMETIC_H
 
+#include "Token.h"
+
 #define Token_ADD(t1, t2) do { \
                 if(t1->type == t2->type) { \
                         switch(t1->type) { \
@@ -10,5 +12,7 @@
                         } \
                 } \
 } while(0)
+
+void Token_add(Token* t1, Token* t2);
 
 #endif
