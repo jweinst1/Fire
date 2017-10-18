@@ -15,10 +15,14 @@
 
 #define Exec_IS_INT(exc) (exc->token.val.number - floor(exc->token.val.number) == 0.0)
 
-//error handling done by setting state to nil, triggering error on next token.
+//checks if executor has an error
+#define Exec_HAS_ERR(exc) (exc->token.err)
+
+#define Exec_SET_ERR(exc, opt) exc->token.err = opt
+
+//error handling done by setting tokentype to nil.
 enum ExecState
 {
-        ExecState_nil, //0 state for errors
         ExecState_AccValue,
         ExecState_AccArrow,
         ExecState_AccOp,
@@ -41,6 +45,15 @@ struct Executor
 };
 
 typedef struct Executor Executor;
+
+static inline void
+Exec_ErrReset(Executor* executor)
+{
+        executor->state = ExecState_AccValue;
+        executor->skipCount = 0;
+        executor->token.type = TokenType_nil;
+        executor->token.err = 0;
+}
 
 //function that applies an argument to a an executor/machine with an op and value
 void Exec_apply(Executor* executor, Token* token);

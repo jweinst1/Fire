@@ -34,6 +34,7 @@ struct Token
 {
         TokenType type;
         TokenVal val;
+        int err;
 };
 
 typedef struct Token Token;

@@ -50,18 +50,22 @@ void Exec_apply(Executor* executor, Token* token)
                 break;
 
         default:
-                executor->state = ExecState_nil;
+                Exec_SET_ERR(executor, 1);
         }
 
 }
 
 void Exec_execute(Executor* executor, Token* token)
 {
+        if(token->err == 1)
+        {
+
+                printf("An error has occurred, op: %d\n", executor->op);
+                Exec_ErrReset(executor);
+                return;
+        }
         switch(executor->state)
         {
-        case ExecState_nil:
-                printf("An error has occurred, op: %d\n", executor->op);
-                break;
         case ExecState_AccValue:
                 switch(token->type)
                 {
@@ -71,7 +75,7 @@ void Exec_execute(Executor* executor, Token* token)
                         executor->state = ExecState_AccArrow;
                         return;
                 default:
-                        executor->state = ExecState_nil;
+                        Exec_SET_ERR(executor, 1);
                         return;
                 }
                 break;
@@ -82,7 +86,7 @@ void Exec_execute(Executor* executor, Token* token)
                         executor->state = ExecState_AccOp;
                         return;
                 default:
-                        executor->state = ExecState_nil;
+                        Exec_SET_ERR(executor, 1);
                         return;
                 }
         case ExecState_AccOp:
@@ -100,7 +104,7 @@ void Exec_execute(Executor* executor, Token* token)
                         Exec_apply(executor, NULL);
                         return;
                 default:
-                        executor->state = ExecState_nil;
+                        Exec_SET_ERR(executor, 1);
                         return;
                 }
                 break;
