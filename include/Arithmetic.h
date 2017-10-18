@@ -35,6 +35,6 @@
 } while(0)
 
 
-void Token_add(Token* t1, Token* t2);
+
 
 #endif

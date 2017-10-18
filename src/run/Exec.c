@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "Arithmetic.h"
+#include "InOut.h"
 
 //if token is null, forms apply route based on current op
 void Exec_apply(Executor* executor, Token* token)
@@ -22,16 +23,8 @@ void Exec_apply(Executor* executor, Token* token)
         case TokenType_Div:
                 Token_DIV(eToken, token);
                 break;
-        case TokenType_Out: // needs to be handled in IO macros
-                switch(executor->token.type)
-                {
-                case TokenType_Number:
-                        if(Exec_IS_INT(executor))
-                                printf("%d\n", (int)(executor->token.val.number));
-                        else printf("%f\n", executor->token.val.number);
-                        executor->state = ExecState_AccArrow;
-                        return;
-                }
+        case TokenType_Out:
+                Token_PRINTN(eToken);
                 break;
 
         default:
