@@ -15,4 +15,16 @@
                 } \
 } while(0)
 
+#define Token_COPY_FROM(t1, t2) do { \
+                switch(t2->type) { \
+                case TokenType_Number: \
+                        t1->type = TokenType_Number; \
+                        t1->val.number = t1->val.number; \
+                        break; \
+                default: \
+                        t1->type = t2->type; \
+                        break; \
+                } \
+} while(0)
+
 #endif
