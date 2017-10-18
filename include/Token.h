@@ -3,6 +3,8 @@
 
 //file that contains token structure and type
 
+#include "TUtils.h"
+
 #define Token_GET_NUM(tok) tok.val.number
 #define Token_SET(tok, type, val) do { \
                 tok.type = type; \

@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 #include "Arithmetic.h"
-#include "TUtils.h"
 
 //if token is null, forms apply route based on current op
 void Exec_apply(Executor* executor, Token* token)

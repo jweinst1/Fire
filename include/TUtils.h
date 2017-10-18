@@ -2,7 +2,6 @@
 #define FIRE_TUTILS_H
 //contains util macros for tokens
 
-#include "Token.h"
 
 #define Token_COPY_TO(t1, t2) do { \
                 switch(t1->type) { \
