@@ -4,11 +4,14 @@
 
 #include "Token.h"
 
-#define Token_COPY_FROM(t1, t2) do { \
-                switch(t2->type) { \
+#define Token_COPY_TO(t1, t2) do { \
+                switch(t1->type) { \
                 case TokenType_Number: \
+                        t2->type = TokenType_Number; \
+                        t2->val.number = t1->val.number; \
                         break; \
-                case TokenType_Add: \
+                default: \
+                        t2->type = t1->type; \
                         break; \
                 } \
 } while(0)

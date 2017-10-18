@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "Arithmetic.h"
+#include "TUtils.h"
 
 //if token is null, forms apply route based on current op
 void Exec_apply(Executor* executor, Token* token)
@@ -42,6 +43,7 @@ void Exec_apply(Executor* executor, Token* token)
 
 void Exec_execute(Executor* executor, Token* token)
 {
+        Token* eToken = &executor->token;
         if(token->err == 1)
         {
 
@@ -98,6 +100,10 @@ void Exec_execute(Executor* executor, Token* token)
                 {
                 case TokenType_ApplyNext:
                         executor->state = ExecState_AccOp;
+                        return;
+                case TokenType_Self:
+                        Token_COPY_TO(eToken, token);
+                        Exec_apply(executor, token);
                         return;
                 default:
                         Exec_apply(executor, token);
