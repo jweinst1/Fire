@@ -53,6 +53,7 @@ Exec_ErrReset(Executor* executor)
         executor->skipCount = 0;
         executor->token.type = TokenType_nil;
         executor->token.err = 0;
+        executor->op = TokenType_nil;
 }
 
 //function that applies an argument to a an executor/machine with an op and value

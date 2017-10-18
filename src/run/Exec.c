@@ -14,30 +14,15 @@ void Exec_apply(Executor* executor, Token* token)
                 Token_ADD(eToken, token);
                 break;
         case TokenType_Sub:
-                switch(executor->token.type)
-                {
-                case TokenType_Number:
-                        executor->token.val.number -= token->val.number;
-                        return;
-                }
+                Token_SUB(eToken, token);
                 break;
         case TokenType_Mul:
-                switch(executor->token.type)
-                {
-                case TokenType_Number:
-                        executor->token.val.number *= token->val.number;
-                        return;
-                }
+                Token_MUL(eToken, token);
                 break;
         case TokenType_Div:
-                switch(executor->token.type)
-                {
-                case TokenType_Number:
-                        executor->token.val.number /= token->val.number;
-                        return;
-                }
+                Token_DIV(eToken, token);
                 break;
-        case TokenType_Out:
+        case TokenType_Out: // needs to be handled in IO macros
                 switch(executor->token.type)
                 {
                 case TokenType_Number:
