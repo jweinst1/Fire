@@ -26,11 +26,20 @@ FireString_new(size_t capacity)
 }
 
 static inline void
-FireString_expand(FireString* fStr)
+FireString_expand(FireString* fStr, size_t amount)
 {
-        fStr->chrs = realloc(fStr->chrs, fStr->cap * 2);
-        if(fStr->chrs) fStr->cap *= 2;
+        fStr->chrs = realloc(fStr->chrs, fStr->cap + amount);
+        if(fStr->chrs) fStr->cap += amount;
         else return; //needs error handling
+}
+
+static inline void
+FireString_concat(FireString* fs1, FireString* fs2) {
+        if(fs1->cap > fs1->len + fs2->len) strcat(fs1->chrs, fs2->chrs);
+        else {
+                FireString_expand(fs1, (fs1->len + fs2->len) * 4);
+                strcat(fs1->chrs, fs2->chrs);
+        }
 }
 
 static inline void
