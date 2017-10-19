@@ -3,12 +3,12 @@
 
 //file that contains token structure and type
 
+#include <stdlib.h>
 #include "TUtils.h"
 
-#define Token_GET_NUM(tok) tok.val.number
-#define Token_SET(tok, type, val) do { \
-                tok.type = type; \
-                tok.val = val; } while(0)
+#define Token_DEFAULT_SIZE 200
+
+
 
 enum TokenType
 {
@@ -25,20 +25,21 @@ enum TokenType
 
 typedef enum TokenType TokenType;
 
-union TokenVal
-{
-        double number;
-};
-
-typedef union TokenVal TokenVal;
-
 struct Token
 {
         TokenType type;
-        TokenVal val;
+        void* buf;
+        size_t len;
         int err;
 };
 
 typedef struct Token Token;
+
+static inline void
+Token_initBuf(Token* token)
+{
+        token->buf = malloc(Token_DEFAULT_SIZE);
+        token->len = Token_DEFAULT_SIZE;
+}
 
 #endif
