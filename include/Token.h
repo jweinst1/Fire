@@ -7,6 +7,9 @@
 #include "TUtils.h"
 
 #define Token_DEFAULT_SIZE 200
+#define Token_EXPAND_BUF(tok) tok->buf = realloc(tok->buf, (tok->capacity*= 2));
+
+
 
 
 
@@ -29,6 +32,7 @@ struct Token
 {
         TokenType type;
         void* buf;
+        size_t cap;
         size_t len;
         int err;
 };
@@ -39,7 +43,8 @@ static inline void
 Token_initBuf(Token* token)
 {
         token->buf = malloc(Token_DEFAULT_SIZE);
-        token->len = Token_DEFAULT_SIZE;
+        token->cap = Token_DEFAULT_SIZE;
+        token->len = 0;
 }
 
 #endif
