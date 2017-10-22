@@ -20,7 +20,21 @@
 
 #define FireStream_EXPAND_TO(stream, newSize) stream->items = realloc(stream->items, newSize)
 
+//expression for the amount of space remaining in the stream
 #define FireStream_SPACE(stream, type) ((stream->cap * sizeof(type)) - (stream->len * sizeof(type)))
+
+//casts the buffer of the stream toward relevant type
+#define FireStream_ITEMS(stream, type) ((type*)stream->items)
+
+//gets an item in the stream with specified type
+#define FireStream_GET(stream, type, ind) ((type*)stream->items)[0]
+
+//generic set macro based on the stream type
+#define FireStream_SET(stream, value, ind) switch (stream->type) { \
+        case StreamType_Number: \
+                ((long*)stream->items)[ind] = value; \
+                break; \
+}
 
 
 
