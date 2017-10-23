@@ -3,11 +3,7 @@
 
 //file that contains token structure and type
 
-#include <stdlib.h>
 #include "TUtils.h"
-
-#define Token_DEFAULT_SIZE 200
-#define Token_EXPAND_BUF(tok) tok->buf = realloc(tok->buf, (tok->capacity*= 2));
 
 
 
@@ -39,12 +35,5 @@ struct Token
 
 typedef struct Token Token;
 
-static inline void
-Token_initBuf(Token* token)
-{
-        token->buf = malloc(Token_DEFAULT_SIZE);
-        token->cap = Token_DEFAULT_SIZE;
-        token->len = 0;
-}
 
 #endif

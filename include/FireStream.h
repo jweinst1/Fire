@@ -16,6 +16,15 @@
                 stream->itemEnd = stream->items; \
 } while(0)
 
+// make macro for literal and not ptr stream
+#define FireStream_MAKE_L(stream, size) do { \
+                stream.items = malloc(size); \
+                stream.cap = size; \
+                stream.len = 0; \
+                stream.end = stream.items + stream.cap; \
+                stream.itemEnd = stream.items; \
+} while(0)
+
 // macro for expanding stream
 #define FireStream_EXPAND(stream, newSize) do { \
                 stream->items = realloc(stream->items, newSize); \
@@ -35,7 +44,8 @@
                         memcpy(stream->itemEnd, value, n); \
                         stream->len += n; \
                         stream->itemEnd = stream->items + stream->len; \
-                } while(0)
+                } \
+} while(0)
 
 //expression for the amount of space remaining in the stream
 #define FireStream_SPACE_T(stream, type) ((stream->cap * sizeof(type)) - (stream->len * sizeof(type)))
@@ -76,6 +86,6 @@ struct FireStream
         StreamType type;
 };
 
-typedef FireStream FireStream;
+typedef struct FireStream FireStream;
 
 #endif
