@@ -32,6 +32,18 @@
                 stream.type = StreamType_UnTyped; \
 } while(0)
 
+// macro that takes a void* data, and some n bytes to make into a new stream
+// onto the FireStream* stream.
+#define FireStream_MAKE_FROM(stream, data, n) do { \
+                stream->items = malloc(n); \
+                memcpy(stream->items, data, n); \
+                stream->cap = n; \
+                stream->len = 0; \
+                stream->end = stream->items + stream->cap; \
+                stream->itemEnd = stream->items; \
+                stream->type = StreamType_UnTyped; \
+} while(0)
+
 // macro for expanding stream
 #define FireStream_EXPAND(stream, newSize) do { \
                 stream->items = realloc(stream->items, newSize); \
@@ -99,6 +111,14 @@
                 stream->items = NULL; \
                 stream->end = NULL; \
                 stream->itemEnd = NULL; \
+} while(0)
+
+// clears the entire buffer by 0 setting data, but does not destroy or deallocate
+#define FireStream_CLEAR(stream) do { \
+                unsigned char* dataPtr = stream->items; \
+                while(dataPtr != stream->itemEnd) *dataPtr++ = 0; \
+                stream->len = 0; \
+                stream->itemEnd = stream->items; \
 } while(0)
 
 
