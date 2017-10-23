@@ -82,6 +82,7 @@
 } while(0)
 
 // makes a copy of stream at ptr streamSrc to stream at ptr streamDst
+// streamDst must not have an already allocated items ptr.
 #define FireStream_COPY(streamDst, streamSrc) do { \
                 streamDst->cap = streamSrc->cap; \
                 streamDst->len = streamSrc->len; \
@@ -89,9 +90,16 @@
                 memcpy(streamDst->items, streamSrc->items, streamSrc->cap); \
                 streamDst->end = streamDst->items + streamDst->cap; \
                 streamDst->itemEnd = streamDst->items + streamDst->len; \
+                streamDst->type = streamSrc->type; \
 } while(0)
 
-#define FireStream_FREE(stream) 5
+// frees memory in a stream.
+#define FireStream_FREE(stream) do { \
+                free(stream->items); \
+                stream->items = NULL; \
+                stream->end = NULL; \
+                stream->itemEnd = NULL; \
+} while(0)
 
 
 enum StreamType

@@ -15,5 +15,11 @@ int main( int argc, char *argv[] )
         FireStream_WRITE_N(smPtr, nums, 8);
         int* nmLst = smPtr->items;
         printf("First and second is %d and %d\n", nmLst[2], nmLst[3]);
+
+        FireStream second;
+        FireStream* secondPtr = &second;
+        FireStream_COPY(secondPtr, smPtr);
+        nmLst = secondPtr->items;
+        printf("First and second is %d and %d\n", nmLst[2], nmLst[3]);
         return 0;
 }
