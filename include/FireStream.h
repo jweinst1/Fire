@@ -4,6 +4,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*****Fire Stream Header******/
+// Expandable buffer stream optimized for map, reduce and filter.
+// FireStream can be shortened by simply moving end of buffer back and rewriting data, or expanded.
+// FireStreams can be iterated over very quickly
+
 //meant to fit 100 8-bit integers by default
 #define FireStream_DEFAULT_SIZE 800
 
@@ -14,6 +19,7 @@
                 stream->len = 0; \
                 stream->end = stream->items + stream->cap; \
                 stream->itemEnd = stream->items; \
+                stream->type = StreamType_UnTyped; \
 } while(0)
 
 // make macro for literal and not ptr stream
@@ -23,6 +29,7 @@
                 stream.len = 0; \
                 stream.end = stream.items + stream.cap; \
                 stream.itemEnd = stream.items; \
+                stream.type = StreamType_UnTyped; \
 } while(0)
 
 // macro for expanding stream
@@ -31,6 +38,14 @@
                 stream->cap = newSize; \
                 stream->end = stream->items + newSize; \
                 stream->itemEnd = stream->items + stream->len; \
+} while(0)
+
+// macro for moving the end marker in the stream back, primarily for reducing
+#define FireStream_SHORTEN(stream, endMark) do { \
+                if(endMark < stream->len) { \
+                        stream->itemEnd = stream->items + endMark; \
+                        stream->len = endMark; \
+                } \
 } while(0)
 
 //macro for writing some pointer without a specified type to the stream
@@ -66,12 +81,22 @@
                 stream->itemEnd = stream->items + stream->len; \
 } while(0)
 
+// makes a copy of stream at ptr streamSrc to stream at ptr streamDst
+#define FireStream_COPY(streamDst, streamSrc) do { \
+                streamDst->cap = streamSrc->cap; \
+                streamDst->len = streamSrc->len; \
+                streamDst->items = malloc(streamSrc->cap); \
+                memcpy(streamDst->items, streamSrc->items, streamSrc->cap); \
+                streamDst->end = streamDst->items + streamDst->cap; \
+                streamDst->itemEnd = streamDst->items + streamDst->len; \
+} while(0)
 
+#define FireStream_FREE(stream) 5
 
 
 enum StreamType
 {
-        StreamType_Number
+        StreamType_UnTyped
 };
 
 typedef enum StreamType StreamType;
