@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "FireMap.h"
+
 /*****Fire Stream Header******/
 // Expandable buffer stream optimized for map, reduce and filter.
 // FireStream can be shortened by simply moving end of buffer back and rewriting data, or expanded.
