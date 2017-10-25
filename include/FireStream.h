@@ -103,6 +103,15 @@
                 stream->itemEnd = stream->items + stream->len; \
 } while(0)
 
+//writes a single byte to stream
+//does not use pointer, uses raw byte value
+#define FireStream_PUT(stream, byte) do { \
+                if(sizeof(unsigned char) > (stream->cap - stream->len)) FireStream_EXPAND(stream, (stream->cap + sizeof(unsigned char) * 2)); \
+                *((unsigned char*)stream->itemEnd) = byte; \
+                stream->len += sizeof(unsigned char); \
+                stream->itemEnd = stream->items + stream->len; \
+} while(0)
+
 // makes a copy of stream at ptr streamSrc to stream at ptr streamDst
 // streamDst must not have an already allocated items ptr.
 #define FireStream_COPY(streamDst, streamSrc) do { \
