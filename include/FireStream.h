@@ -90,7 +90,7 @@
 //writes a typed value pointer to stream
 #define FireStream_WRITE_T(stream, type, value) do { \
                 if(sizeof(type) > (stream->cap - stream->len)) FireStream_EXPAND(stream, (stream->cap + sizeof(type) * 2)); \
-                *((type*)stream->itemEnd) = *value; \
+                *((type*)stream->itemEnd) = *(type*)value; \
                 stream->len += sizeof(type); \
                 stream->itemEnd = stream->items + stream->len; \
 } while(0)
