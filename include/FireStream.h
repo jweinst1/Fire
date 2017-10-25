@@ -105,9 +105,9 @@
 
 //writes a single byte to stream
 //does not use pointer, uses raw byte value
-#define FireStream_PUT(stream, byte) do { \
+#define FireStream_WRITE_BYTE(stream, byte) do { \
                 if(sizeof(unsigned char) > (stream->cap - stream->len)) FireStream_EXPAND(stream, (stream->cap + sizeof(unsigned char) * 2)); \
-                *((unsigned char*)stream->itemEnd) = byte; \
+                *((unsigned char*)stream->itemEnd) = byte % 256; \
                 stream->len += sizeof(unsigned char); \
                 stream->itemEnd = stream->items + stream->len; \
 } while(0)

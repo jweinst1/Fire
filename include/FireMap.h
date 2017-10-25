@@ -2,6 +2,7 @@
 #define FIRE_MAP_H
 
 #include <stdio.h>
+#include <math.h>
 #include "Utils.h"
 
 // contains Mapping macros for Fire language
@@ -13,6 +14,48 @@
                         iLst++; \
                 } \
 } while(0)
+
+#define FireMap_SUB(stream, number) do { \
+                double* iLst = stream->items; \
+                while(iLst != stream->itemEnd) { \
+                        *iLst -= number; \
+                        iLst++; \
+                } \
+} while(0)
+
+#define FireMap_MUL(stream, number) do { \
+                double* iLst = stream->items; \
+                while(iLst != stream->itemEnd) { \
+                        *iLst *= number; \
+                        iLst++; \
+                } \
+} while(0)
+
+#define FireMap_DIV(stream, number) do { \
+                double* iLst = stream->items; \
+                while(iLst != stream->itemEnd) { \
+                        *iLst /= Utils_NO_ZERO(number); \
+                        iLst++; \
+                } \
+} while(0)
+
+#define FireMap_REM(stream, number) do { \
+                double* iLst = stream->items; \
+                while(iLst != stream->itemEnd) { \
+                        *iLst %= Utils_NO_ZERO(number); \
+                        iLst++; \
+                } \
+} while(0)
+
+#define FireMap_FLOOR(stream) do { \
+                double* iLst = stream->items; \
+                while(iLst != stream->itemEnd) { \
+                        *iLst = floor(*iLst); \
+                        iLst++; \
+                } \
+} while(0)
+
+
 
 #define FireMap_PRINT(stream) do { \
                 double* iLst = stream->items; \
