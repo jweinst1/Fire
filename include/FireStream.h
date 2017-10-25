@@ -95,6 +95,14 @@
                 stream->itemEnd = stream->items + stream->len; \
 } while(0)
 
+//macro specifically for writing numbers to stream
+#define FireStream_WRITE_NUM(stream, value) do { \
+                if(sizeof(double) > (stream->cap - stream->len)) FireStream_EXPAND(stream, (stream->cap + sizeof(double) * 2)); \
+                *((double*)stream->itemEnd) = *(double*)value; \
+                stream->len += sizeof(double); \
+                stream->itemEnd = stream->items + stream->len; \
+} while(0)
+
 // makes a copy of stream at ptr streamSrc to stream at ptr streamDst
 // streamDst must not have an already allocated items ptr.
 #define FireStream_COPY(streamDst, streamSrc) do { \

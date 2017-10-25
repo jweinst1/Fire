@@ -11,8 +11,8 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
                         return;
                 case 1:
                         bytes++;
-                        FireStream_WRITE_T(fsPtr, long, bytes);
-                        bytes += 8;
+                        FireStream_WRITE_NUM(fsPtr, bytes);
+                        bytes += sizeof(double);
                         break;
                 default:
                         fmach->err = 1;
