@@ -14,5 +14,8 @@ int main( int argc, char *argv[] )
         FireStream* fstream = &mach.stream;
         FireMap_ADD(fstream, 55);
         FireMap_PRINT(fstream);
+        FireStream_PUT(fstream, 66);
+        printf("The length is %lu\n", fstream->itemEnd - fstream->items);
+        printf("The last is %u\n", *(unsigned char*)(fstream->itemEnd-1));
         return 0;
 }

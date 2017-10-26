@@ -14,6 +14,11 @@
 //meant to fit 100 8-bit integers by default
 #define FireStream_DEFAULT_SIZE 800
 
+// Byte->type codes
+
+#define FireStream_NULL 0
+#define FireStream_NUMBER 1
+
 
 #define FireStream_MAKE(stream, size) do { \
                 stream->items = malloc(size); \
@@ -62,6 +67,9 @@
                 } \
 } while(0)
 
+// unchecked method of simply adding a byte to the current itemEnd ptr.
+#define FireStream_PUT(stream, byte) *(unsigned char*)(stream->itemEnd++) = byte
+
 //macro for writing some pointer without a specified type to the stream
 #define FireStream_WRITE_N(stream, value, n) do { \
                 if(n < (stream->cap - stream->len)) { \
@@ -97,7 +105,7 @@
 
 //macro specifically for writing numbers to stream
 #define FireStream_WRITE_NUM(stream, value) do { \
-                if(sizeof(double) > (stream->cap - stream->len)) FireStream_EXPAND(stream, (stream->cap + sizeof(double) * 2)); \
+                if((sizeof(double) + 1) > (stream->cap - stream->len)) FireStream_EXPAND(stream, (stream->cap + sizeof(double) * 2)); \
                 *((double*)stream->itemEnd) = *(double*)value; \
                 stream->len += sizeof(double); \
                 stream->itemEnd = stream->items + stream->len; \
