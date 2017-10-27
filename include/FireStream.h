@@ -20,10 +20,17 @@
 #define FireStream_NUMBER 1
 
 
+
+// calculates the length of stream
+#define FireStream_LEN(stream) (stream->itemEnd - stream->items)
+
+// calculates remaining space in stream
+#define FireStream_SPACE(stream) (stream->end - stream->itemEnd)
+
+
 #define FireStream_MAKE(stream, size) do { \
                 stream->items = malloc(size); \
                 stream->cap = size; \
-                stream->len = 0; \
                 stream->end = stream->items + stream->cap; \
                 stream->itemEnd = stream->items; \
                 stream->type = StreamType_UnTyped; \
@@ -33,7 +40,6 @@
 #define FireStream_MAKE_L(stream, size) do { \
                 stream.items = malloc(size); \
                 stream.cap = size; \
-                stream.len = 0; \
                 stream.end = stream.items + stream.cap; \
                 stream.itemEnd = stream.items; \
                 stream.type = StreamType_UnTyped; \
@@ -45,7 +51,6 @@
                 stream->items = malloc(n); \
                 memcpy(stream->items, data, n); \
                 stream->cap = n; \
-                stream->len = 0; \
                 stream->end = stream->items + stream->cap; \
                 stream->itemEnd = stream->items; \
                 stream->type = StreamType_UnTyped; \
@@ -53,55 +58,34 @@
 
 // macro for expanding stream
 #define FireStream_EXPAND(stream, newSize) do { \
+                size_t ilen = stream->itemEnd - stream->items; \
                 stream->items = realloc(stream->items, newSize); \
                 stream->cap = newSize; \
                 stream->end = stream->items + newSize; \
-                stream->itemEnd = stream->items + stream->len; \
+                stream->itemEnd = stream->items + ilen; \
+} while(0)
+
+// macro that always expands if not enough space to double the size
+#define FireStream_EXPAND_IF(stream, space) do { \
+                /* code */ \
 } while(0)
 
 // macro for moving the end marker in the stream back, primarily for reducing
 #define FireStream_SHORTEN(stream, endMark) do { \
-                if(endMark < stream->len) { \
+                if(endMark < FireStream_LEN(stream)) { \
                         stream->itemEnd = stream->items + endMark; \
-                        stream->len = endMark; \
                 } \
 } while(0)
 
 // unchecked method of simply adding a byte to the current itemEnd ptr.
 #define FireStream_PUT(stream, byte) *(unsigned char*)(stream->itemEnd++) = byte
 
-//macro for writing some pointer without a specified type to the stream
-#define FireStream_WRITE_N(stream, value, n) do { \
-                if(n < (stream->cap - stream->len)) { \
-                        memcpy(stream->itemEnd, value, n); \
-                        stream->len += n; \
-                        stream->itemEnd = stream->items + stream->len; \
-                } else { \
-                        FireStream_EXPAND(stream, (stream->cap + n * 2)); \
-                        memcpy(stream->itemEnd, value, n); \
-                        stream->len += n; \
-                        stream->itemEnd = stream->items + stream->len; \
-                } \
+#define FireStream_PUSH_NUM(stream, numPtr) do { \
+                FireStream_PUT(stream, 1); \
+  \
 } while(0)
 
-//expression for the amount of space remaining in the stream
-#define FireStream_SPACE_T(stream, type) ((stream->cap * sizeof(type)) - (stream->len * sizeof(type)))
 
-#define FireStream_LENGTH_T(stream, type) (stream->len / sizeof(type))
-
-//casts the buffer of the stream toward relevant type
-#define FireStream_ITEMS_T(stream, type) ((type*)stream->items)
-
-//gets an item in the stream with specified type
-#define FireStream_GET_T(stream, type, ind) ((type*)stream->items)[ind]
-
-//writes a typed value pointer to stream
-#define FireStream_WRITE_T(stream, type, value) do { \
-                if(sizeof(type) > (stream->cap - stream->len)) FireStream_EXPAND(stream, (stream->cap + sizeof(type) * 2)); \
-                *((type*)stream->itemEnd) = *(type*)value; \
-                stream->len += sizeof(type); \
-                stream->itemEnd = stream->items + stream->len; \
-} while(0)
 
 //macro specifically for writing numbers to stream
 #define FireStream_WRITE_NUM(stream, value) do { \
@@ -111,20 +95,13 @@
                 stream->itemEnd = stream->items + stream->len; \
 } while(0)
 
-//writes a single byte to stream
-//does not use pointer, uses raw byte value
-#define FireStream_WRITE_BYTE(stream, byte) do { \
-                if(sizeof(unsigned char) > (stream->cap - stream->len)) FireStream_EXPAND(stream, (stream->cap + sizeof(unsigned char) * 2)); \
-                *((unsigned char*)stream->itemEnd) = byte % 256; \
-                stream->len += sizeof(unsigned char); \
-                stream->itemEnd = stream->items + stream->len; \
-} while(0)
+
+
 
 // makes a copy of stream at ptr streamSrc to stream at ptr streamDst
 // streamDst must not have an already allocated items ptr.
 #define FireStream_COPY(streamDst, streamSrc) do { \
                 streamDst->cap = streamSrc->cap; \
-                streamDst->len = streamSrc->len; \
                 streamDst->items = malloc(streamSrc->cap); \
                 memcpy(streamDst->items, streamSrc->items, streamSrc->cap); \
                 streamDst->end = streamDst->items + streamDst->cap; \
@@ -144,26 +121,19 @@
 #define FireStream_CLEAR(stream) do { \
                 unsigned char* dataPtr = stream->items; \
                 while(dataPtr != stream->itemEnd) *dataPtr++ = 0; \
-                stream->len = 0; \
                 stream->itemEnd = stream->items; \
 } while(0)
 
 
-enum StreamType
-{
-        StreamType_UnTyped
-};
 
-typedef enum StreamType StreamType;
+
 
 struct FireStream
 {
         void* items;
         void* itemEnd;
         void* end;
-        size_t len;
         size_t cap;
-        StreamType type;
 };
 
 typedef struct FireStream FireStream;
