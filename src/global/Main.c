@@ -6,9 +6,11 @@ int main( int argc, char *argv[] )
         FireStream fst;
         FireStream* fstPtr = &fst;
         FireStream_MAKE(fstPtr, 1000);
-        double num = 777;
-        void* nPtr = &num;
-        FireStream_PUSH_NUM(fstPtr, nPtr);
+        double end = 7;
+        double* endp = &end;
+        FireStream_PUSH_ZRNG(fstPtr, endp);
         printf("%ld\n", FireStream_LEN(fstPtr));
+        unsigned char* iter = fstPtr->items;
+        for(; iter != fstPtr->itemEnd; iter++) printf("%u, \n", *iter);
         return 0;
 }

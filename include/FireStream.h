@@ -53,6 +53,12 @@
                 stream->itemEnd = stream->items; \
 } while(0)
 
+// pushes a range of numbers to the stream.
+// end is a pointer to a number
+#define FireStream_PUSH_ZRNG(stream, end) do { \
+                for (double i = 0; i < *(double*)end; i++) FireStream_PUSH_LNUM(stream, i); \
+} while(0)
+
 // macro for expanding stream
 #define FireStream_EXPAND(stream, newSize) do { \
                 size_t ilen = stream->itemEnd - stream->items; \
@@ -75,10 +81,19 @@
 // unchecked method of simply adding a byte to the current itemEnd ptr.
 #define FireStream_PUT(stream, byte) *(unsigned char*)(stream->itemEnd++) = byte
 
+// writes one number to the end of the stream, expanding if needed
 #define FireStream_PUSH_NUM(stream, numPtr) do { \
                 FireStream_EXPAND_IF(stream, sizeof(double) + 1); \
                 FireStream_PUT(stream, FireStream_TYPE_NUM); \
                 *(double*)(stream->itemEnd) = *(double*)numPtr; \
+                stream->itemEnd += sizeof(double); \
+} while(0)
+
+// writes a literal double to the end of the stream
+#define FireStream_PUSH_LNUM(stream, num) do { \
+                FireStream_EXPAND_IF(stream, sizeof(double) + 1); \
+                FireStream_PUT(stream, FireStream_TYPE_NUM); \
+                *(double*)(stream->itemEnd) = num; \
                 stream->itemEnd += sizeof(double); \
 } while(0)
 
