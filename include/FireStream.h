@@ -53,6 +53,17 @@
                 stream->itemEnd = stream->items; \
 } while(0)
 
+// like other MAKE macros, this initializes a zero range stream
+#define FireStream_MAKE_ZRNG(stream, end) do { \
+                stream->cap = end * (sizeof(double) + 1); \
+                stream->items = malloc(stream->cap); \
+                stream->end = stream->items + stream->cap; \
+                stream->itemEnd = stream->items; \
+                for (double i = 0; i < end; i++) { \
+                        FireStream_PUT_LNUM(stream, i); \
+                } \
+} while(0)
+
 // pushes a range of numbers to the stream.
 // end is a pointer to a number
 #define FireStream_PUSH_ZRNG(stream, end) do { \
@@ -95,6 +106,20 @@
                 FireStream_PUT(stream, FireStream_TYPE_NUM); \
                 *(double*)(stream->itemEnd) = num; \
                 stream->itemEnd += sizeof(double); \
+} while(0)
+
+// unchecked method of putting number with preceding byte marker onto stream
+#define FireStream_PUT_LNUM(stream, num) do { \
+                FireStream_PUT(stream, FireStream_TYPE_NUM); \
+                *(double*)(stream->itemEnd) = num; \
+                stream->itemEnd += sizeof(double); \
+} while(0)
+
+// pads the stream with n null bytes (0 bytes)
+// n is a literal integer
+#define FireStream_PAD_NULL(stream, n) do { \
+                FireStream_EXPAND_IF(stream, n); \
+                for (size_t i = 0; i < n; i++) *(unsigned char*)(stream->itemEnd++) = 0; \
 } while(0)
 
 
