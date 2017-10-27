@@ -4,14 +4,18 @@
 #include <stdio.h>
 #include <math.h>
 #include "Utils.h"
+#include "FireTypes.h"
 
 // contains Mapping macros for Fire language
 
+//quick macro for comparing byte types.
+#define FireMap_IS_TYPE(ptr, type) (*(unsigned char*)ptr == type)
+
 #define FireMap_ADD(stream, number) do { \
-                double* iLst = stream->items; \
-                while(iLst != stream->itemEnd) { \
-                        *iLst += number; \
-                        iLst++; \
+                void* reader = stream->items; \
+                void* mapper = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) {} \
                 } \
 } while(0)
 

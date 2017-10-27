@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "FireTypes.h"
 #include "FireMap.h"
 
 /*****Fire Stream Header******/
@@ -14,10 +15,8 @@
 //meant to fit 100 8-bit integers by default
 #define FireStream_DEFAULT_SIZE 800
 
-// Byte->type codes
 
 
-#define FireStream_TYPE_NUM 1
 
 
 
