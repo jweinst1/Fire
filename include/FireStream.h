@@ -16,8 +16,8 @@
 
 // Byte->type codes
 
-#define FireStream_NULL 0
-#define FireStream_NUMBER 1
+
+#define FireStream_TYPE_NUM 1
 
 
 
@@ -33,7 +33,6 @@
                 stream->cap = size; \
                 stream->end = stream->items + stream->cap; \
                 stream->itemEnd = stream->items; \
-                stream->type = StreamType_UnTyped; \
 } while(0)
 
 // make macro for literal and not ptr stream
@@ -42,7 +41,6 @@
                 stream.cap = size; \
                 stream.end = stream.items + stream.cap; \
                 stream.itemEnd = stream.items; \
-                stream.type = StreamType_UnTyped; \
 } while(0)
 
 // macro that takes a void* data, and some n bytes to make into a new stream
@@ -53,7 +51,6 @@
                 stream->cap = n; \
                 stream->end = stream->items + stream->cap; \
                 stream->itemEnd = stream->items; \
-                stream->type = StreamType_UnTyped; \
 } while(0)
 
 // macro for expanding stream
@@ -66,9 +63,7 @@
 } while(0)
 
 // macro that always expands if not enough space to double the size
-#define FireStream_EXPAND_IF(stream, space) do { \
-                /* code */ \
-} while(0)
+#define FireStream_EXPAND_IF(stream, space) if(space > (stream->end - stream->itemEnd)) FireStream_EXPAND(stream, stream->cap + space * 2)
 
 // macro for moving the end marker in the stream back, primarily for reducing
 #define FireStream_SHORTEN(stream, endMark) do { \
@@ -81,19 +76,13 @@
 #define FireStream_PUT(stream, byte) *(unsigned char*)(stream->itemEnd++) = byte
 
 #define FireStream_PUSH_NUM(stream, numPtr) do { \
-                FireStream_PUT(stream, 1); \
-  \
+                FireStream_EXPAND_IF(stream, sizeof(double) + 1); \
+                FireStream_PUT(stream, FireStream_TYPE_NUM); \
+                *(double*)(stream->itemEnd) = *(double*)numPtr; \
+                stream->itemEnd += sizeof(double); \
 } while(0)
 
 
-
-//macro specifically for writing numbers to stream
-#define FireStream_WRITE_NUM(stream, value) do { \
-                if((sizeof(double) + 1) > (stream->cap - stream->len)) FireStream_EXPAND(stream, (stream->cap + sizeof(double) * 2)); \
-                *((double*)stream->itemEnd) = *(double*)value; \
-                stream->len += sizeof(double); \
-                stream->itemEnd = stream->items + stream->len; \
-} while(0)
 
 
 
@@ -106,7 +95,6 @@
                 memcpy(streamDst->items, streamSrc->items, streamSrc->cap); \
                 streamDst->end = streamDst->items + streamDst->cap; \
                 streamDst->itemEnd = streamDst->items + streamDst->len; \
-                streamDst->type = streamSrc->type; \
 } while(0)
 
 // frees memory in a stream.
