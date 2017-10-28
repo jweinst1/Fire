@@ -15,7 +15,12 @@
                 void* reader = stream->items; \
                 void* mapper = stream->items; \
                 while (reader != stream->itemEnd) { \
-                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) {} \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
+                                *(double*)mapper = *(double*)reader + number; \
+                                reader += sizeof(double); mapper += sizeof(double); \
+                        } \
                 } \
 } while(0)
 
