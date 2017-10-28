@@ -11,17 +11,17 @@
                 void* writer = stream->items; \
                 while(reader != stream->itemEnd) { \
                         if(*reader == FireStream_TYPE_NUM) { \
-                                if(memcmp(++reader, value, sizeof(double))) { \
-                                        *(unsigned char*)writer = FireStream_WRITE_NUM; \
+                                if(!memcmp(++reader, value, sizeof(double))) { \
+                                        *(unsigned char*)writer = FireStream_TYPE_NUM; \
                                         memcpy(++writer, reader, sizeof(double)); \
                                         writer += sizeof(double); reader += sizeof(double); \
                                 } \
                                 else { \
-                                        writer += sizeof(double) + 1; \
                                         reader += sizeof(double); \
                                 } \
                         } \
                 } \
+                stream->itemEnd = writer; \
 } while(0)
 
 // #define FireFilter_NOT_EQ(stream, value)

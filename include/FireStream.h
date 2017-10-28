@@ -6,6 +6,7 @@
 
 #include "FireTypes.h"
 #include "FireMap.h"
+#include "FireFilter.h"
 
 /*****Fire Stream Header******/
 // Expandable buffer stream optimized for map, reduce and filter.
@@ -53,12 +54,12 @@
 } while(0)
 
 // like other MAKE macros, this initializes a zero range stream
-#define FireStream_MAKE_ZRNG(stream, end) do { \
-                stream->cap = end * (sizeof(double) + 1); \
+#define FireStream_MAKE_ZRNG(stream, endMark) do { \
+                stream->cap = endMark * (sizeof(double) + 1) + 100; \
                 stream->items = malloc(stream->cap); \
                 stream->end = stream->items + stream->cap; \
                 stream->itemEnd = stream->items; \
-                for (double i = 0; i < end; i++) { \
+                for (double i = 0; i < endMark; i++) { \
                         FireStream_PUT_LNUM(stream, i); \
                 } \
 } while(0)
