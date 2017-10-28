@@ -25,55 +25,83 @@
 } while(0)
 
 #define FireMap_SUB(stream, number) do { \
-                double* iLst = stream->items; \
-                while(iLst != stream->itemEnd) { \
-                        *iLst -= number; \
-                        iLst++; \
+                void* reader = stream->items; \
+                void* mapper = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
+                                *(double*)mapper = *(double*)reader - number; \
+                                reader += sizeof(double); mapper += sizeof(double); \
+                        } \
                 } \
 } while(0)
 
 #define FireMap_MUL(stream, number) do { \
-                double* iLst = stream->items; \
-                while(iLst != stream->itemEnd) { \
-                        *iLst *= number; \
-                        iLst++; \
+                void* reader = stream->items; \
+                void* mapper = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
+                                *(double*)mapper = *(double*)reader * number; \
+                                reader += sizeof(double); mapper += sizeof(double); \
+                        } \
                 } \
 } while(0)
 
 #define FireMap_DIV(stream, number) do { \
-                double* iLst = stream->items; \
-                while(iLst != stream->itemEnd) { \
-                        *iLst /= Utils_NO_ZERO(number); \
-                        iLst++; \
+                void* reader = stream->items; \
+                void* mapper = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
+                                *(double*)mapper = *(double*)reader / Utils_NO_ZERO(number); \
+                                reader += sizeof(double); mapper += sizeof(double); \
+                        } \
                 } \
 } while(0)
 
 #define FireMap_REM(stream, number) do { \
-                double* iLst = stream->items; \
-                while(iLst != stream->itemEnd) { \
-                        *iLst %= Utils_NO_ZERO(number); \
-                        iLst++; \
+                void* reader = stream->items; \
+                void* mapper = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
+                                *(double*)mapper = *(double*)reader % Utils_NO_ZERO(number); \
+                                reader += sizeof(double); mapper += sizeof(double); \
+                        } \
                 } \
 } while(0)
 
-#define FireMap_FLOOR(stream) do { \
-                double* iLst = stream->items; \
-                while(iLst != stream->itemEnd) { \
-                        *iLst = floor(*iLst); \
-                        iLst++; \
+#define FireMap_FLOOR(stream, number) do { \
+                void* reader = stream->items; \
+                void* mapper = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
+                                *(double*)mapper = floor(*(double*)reader); \
+                                reader += sizeof(double); mapper += sizeof(double); \
+                        } \
                 } \
 } while(0)
 
-
-
-#define FireMap_PRINT(stream) do { \
-                double* iLst = stream->items; \
-                printf("%c ", '['); \
-                while(iLst != stream->itemEnd) { \
-                        if(!Utils_DBL_IS_INT(*iLst)) printf("%f ", *iLst++); \
-                        else printf("%d ", (int)*iLst++); \
+// temporary print, will be moved to IO dedicated header
+#define FireMap_PRINT(stream, number) do { \
+                void* reader = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                printf("%f, ", *(double*)reader); \
+                                reader += sizeof(double); \
+                        } \
                 } \
-                puts("]"); \
+                puts("~"); \
 } while(0)
+
+
 
 #endif
