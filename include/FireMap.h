@@ -98,6 +98,7 @@
                                 printf("%f, ", *(double*)reader); \
                                 reader += sizeof(double); \
                         } \
+                        else break; \
                 } \
                 puts("~"); \
 } while(0)
