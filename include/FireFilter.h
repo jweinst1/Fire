@@ -43,4 +43,42 @@
                 stream->itemEnd = writer; \
 } while(0)
 
+#define FireFilter_GT(stream, value) do { \
+                unsigned char* reader = stream->items; \
+                void* writer = stream->items; \
+                while(reader != stream->itemEnd) { \
+                        if(*reader == FireStream_TYPE_NUM) { \
+                                reader++; \
+                                if(*(double*)reader > *(double*)value) { \
+                                        *(unsigned char*)writer = FireStream_TYPE_NUM; \
+                                        memcpy(++writer, reader, sizeof(double)); \
+                                        writer += sizeof(double); reader += sizeof(double); \
+                                } \
+                                else { \
+                                        reader += sizeof(double); \
+                                } \
+                        } \
+                } \
+                stream->itemEnd = writer; \
+} while(0)
+
+#define FireFilter_LT(stream, value) do { \
+                unsigned char* reader = stream->items; \
+                void* writer = stream->items; \
+                while(reader != stream->itemEnd) { \
+                        if(*reader == FireStream_TYPE_NUM) { \
+                                reader++; \
+                                if(*(double*)reader < *(double*)value) { \
+                                        *(unsigned char*)writer = FireStream_TYPE_NUM; \
+                                        memcpy(++writer, reader, sizeof(double)); \
+                                        writer += sizeof(double); reader += sizeof(double); \
+                                } \
+                                else { \
+                                        reader += sizeof(double); \
+                                } \
+                        } \
+                } \
+                stream->itemEnd = writer; \
+} while(0)
+
 #endif
