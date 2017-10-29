@@ -7,7 +7,8 @@ int main( int argc, char *argv[] )
         FireStream* fstPtr = &fst;
         FireStream_MAKE_ZRNG(fstPtr, 10);
         printf(" len is then %lu\n", FireStream_LEN(fstPtr));
-        FireReduce_MUL(fstPtr);
-        FireMap_PRINT(fstPtr);
+        FireIO_PRINT(fstPtr);
+        FireReduce_SUB(fstPtr);
+        FireIO_PRINT(fstPtr);
         return 0;
 }

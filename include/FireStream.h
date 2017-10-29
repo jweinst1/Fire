@@ -8,6 +8,7 @@
 #include "FireMap.h"
 #include "FireFilter.h"
 #include "FireReduce.h"
+#include "FireIO.h"
 
 /*****Fire Stream Header******/
 // Expandable buffer stream optimized for map, reduce and filter.
