@@ -66,6 +66,17 @@
                 } \
 } while(0)
 
+// like other MAKE macros, this initializes a stream of all the same numbers
+#define FireStream_MAKE_SNUM(stream, endMark) do { \
+                stream->cap = endMark * (sizeof(double) + 1) + 100; \
+                stream->items = malloc(stream->cap); \
+                stream->end = stream->items + stream->cap; \
+                stream->itemEnd = stream->items; \
+                for (double i = 0; i < endMark; i++) { \
+                        FireStream_PUT_LNUM(stream, endMark); \
+                } \
+} while(0)
+
 // pushes a range of numbers to the stream.
 // end is a pointer to a number
 #define FireStream_PUSH_ZRNG(stream, end) do { \

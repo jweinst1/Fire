@@ -90,18 +90,7 @@
 } while(0)
 
 // temporary print, will be moved to IO dedicated header
-#define FireMap_PRINT(stream) do { \
-                void* reader = stream->items; \
-                while (reader != stream->itemEnd) { \
-                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
-                                reader++; \
-                                printf("%f, ", *(double*)reader); \
-                                reader += sizeof(double); \
-                        } \
-                        else break; \
-                } \
-                puts("~"); \
-} while(0)
+
 
 
 

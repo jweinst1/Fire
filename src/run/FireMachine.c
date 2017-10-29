@@ -10,8 +10,12 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
                 case 0: // stop code
                         return;
                 case 1:
+                        FireIO_PRINT(fsPtr);
                         bytes++;
-                        FireStream_WRITE_NUM(fsPtr, bytes);
+                        break;
+                case 2:
+                        bytes++;
+                        FireStream_PUSH_NUM(fsPtr, bytes);
                         bytes += sizeof(double);
                         break;
                 default:
