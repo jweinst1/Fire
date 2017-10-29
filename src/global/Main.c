@@ -10,7 +10,8 @@ int main( int argc, char *argv[] )
         printf(" len is then %lu\n", FireStream_LEN(fstPtr));
         double comp = 3;
         double* compmem = &comp;
-        FireFilter_LT(fstPtr, compmem);
-        printf(" len is now %lu, val is %f\n", FireStream_LEN(fstPtr), *(double*)(fstPtr->items + 1));
+        FireFilter_GT(fstPtr, compmem);
+
+        FireMap_PRINT(fstPtr);
         return 0;
 }
