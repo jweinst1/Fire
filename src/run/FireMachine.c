@@ -3,6 +3,7 @@
 void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
 {
         FireStream* fstPtr = &fmach->stream;
+
         while(*bytes)
         {
                 switch(*bytes)
@@ -39,6 +40,7 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
                         FireStream_PUSH_ZRNG(fstPtr, bytes);
                         bytes += sizeof(double);
                         break;
+                //mapping macros
                 case 8:
                         bytes++;
                         FireMap_ADD(fstPtr, *(double*)bytes);
@@ -68,20 +70,36 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
                         FireMap_FLOOR(fstPtr);
                         bytes++;
                         break;
-                //filter macros
                 case 14:
+                        FireMap_SIN(fstPtr);
+                        bytes++;
+                        break;
+                case 15:
+                        FireMap_COS(fstPtr);
+                        bytes++;
+                        break;
+                case 16:
+                        FireMap_LOG(fstPtr);
+                        bytes++;
+                        break;
+                case 17:
+                        FireMap_EXP(fstPtr);
+                        bytes++;
+                        break;
+                //filter macros
+                case 18:
                         bytes++;
                         FireFilter_EQ(fstPtr, bytes);
                         break;
-                case 15:
+                case 19:
                         bytes++;
                         FireFilter_NOT_EQ(fstPtr, bytes);
                         break;
-                case 16:
+                case 20:
                         bytes++;
                         FireFilter_LT(fstPtr, bytes);
                         break;
-                case 17:
+                case 21:
                         bytes++;
                         FireFilter_GT(fstPtr, bytes);
                         break;

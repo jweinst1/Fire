@@ -12,6 +12,17 @@ int main( int argc, char *argv[] )
         code++;
         *(unsigned char*)code = 7;
         code++;
+
+
+
+
+
+
+
+
+
+
+
         double marker = 10;
         memcpy(code, &marker, sizeof(double));
         code += sizeof(double);
