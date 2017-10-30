@@ -11,8 +11,8 @@
                 while (reader != stream->itemEnd) { \
                         if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
                                 reader++; \
-                                if(Utils_DBL_IS_INT(*(double*)reader)) printf("%ld, ", ((long)*(double*)reader)); \
-                                else printf("%f, ", *(double*)reader); \
+                                if(Utils_DBL_IS_INT(*(double*)reader)) printf("%ld ", ((long)*(double*)reader)); \
+                                else printf("%f ", *(double*)reader); \
                                 reader += sizeof(double); \
                         } \
                         else break; \
