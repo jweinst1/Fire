@@ -70,7 +70,7 @@
                         if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
                                 reader++; \
                                 *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
-                                *(double*)mapper = *(double*)reader % Utils_NO_ZERO(number); \
+                                *(double*)mapper = fmod(*(double*)reader, Utils_NO_ZERO(number)); \
                                 reader += sizeof(double); mapper += sizeof(double); \
                         } \
                 } \
@@ -84,6 +84,58 @@
                                 reader++; \
                                 *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
                                 *(double*)mapper = floor(*(double*)reader); \
+                                reader += sizeof(double); mapper += sizeof(double); \
+                        } \
+                } \
+} while(0)
+
+#define FireMap_SIN(stream) do { \
+                void* reader = stream->items; \
+                void* mapper = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
+                                *(double*)mapper = sin(*(double*)reader); \
+                                reader += sizeof(double); mapper += sizeof(double); \
+                        } \
+                } \
+} while(0)
+
+#define FireMap_COS(stream) do { \
+                void* reader = stream->items; \
+                void* mapper = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
+                                *(double*)mapper = cos(*(double*)reader); \
+                                reader += sizeof(double); mapper += sizeof(double); \
+                        } \
+                } \
+} while(0)
+
+#define FireMap_EXP(stream) do { \
+                void* reader = stream->items; \
+                void* mapper = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
+                                *(double*)mapper = exp(*(double*)reader); \
+                                reader += sizeof(double); mapper += sizeof(double); \
+                        } \
+                } \
+} while(0)
+
+#define FireMap_LOG(stream) do { \
+                void* reader = stream->items; \
+                void* mapper = stream->items; \
+                while (reader != stream->itemEnd) { \
+                        if(FireMap_IS_TYPE(reader, FireStream_TYPE_NUM)) { \
+                                reader++; \
+                                *(unsigned char*)(mapper++) = FireStream_TYPE_NUM; \
+                                *(double*)mapper = log(*(double*)reader); \
                                 reader += sizeof(double); mapper += sizeof(double); \
                         } \
                 } \

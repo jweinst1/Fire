@@ -2,7 +2,7 @@
 
 void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
 {
-        FireStream* fsPtr = &fmach->stream;
+        FireStream* fstPtr = &fmach->stream;
         while(*bytes)
         {
                 switch(*bytes)
@@ -10,62 +10,62 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
                 case 0: // stop code
                         return;
                 case 1:
-                        FireIO_PRINT(fsPtr);
+                        FireIO_PRINT(fstPtr);
                         bytes++;
                         break;
                 case 2:
-                        FireReduce_ADD(fsPtr);
+                        FireReduce_ADD(fstPtr);
                         bytes++;
                         break;
                 case 3:
-                        FireReduce_SUB(fsPtr);
+                        FireReduce_SUB(fstPtr);
                         bytes++;
                         break;
                 case 4:
-                        FireReduce_MUL(fsPtr);
+                        FireReduce_MUL(fstPtr);
                         bytes++;
                         break;
                 case 5:
-                        FireReduce_DIV(fsPtr);
+                        FireReduce_DIV(fstPtr);
                         bytes++;
                         break;
                 case 6:
                         bytes++;
-                        FireStream_PUSH_NUM(fsPtr, bytes);
+                        FireStream_PUSH_NUM(fstPtr, bytes);
                         bytes += sizeof(double);
                         break;
                 case 7:
                         bytes++;
-                        FireStream_PUSH_ZRNG(fsPtr, bytes);
+                        FireStream_PUSH_ZRNG(fstPtr, bytes);
                         bytes += sizeof(double);
                         break;
                 case 8:
                         bytes++;
-                        FireMap_ADD(fsPtr, *(double*)bytes);
+                        FireMap_ADD(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
                 case 9:
                         bytes++;
-                        FireMap_SUB(fsPtr, *(double*)bytes);
+                        FireMap_SUB(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
                 case 10:
                         bytes++;
-                        FireMap_MUL(fsPtr, *(double*)bytes);
+                        FireMap_MUL(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
                 case 11:
                         bytes++;
-                        FireMap_DIV(fsPtr, *(double*)bytes);
+                        FireMap_DIV(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
                 case 12:
                         bytes++;
-                        FireMap_REM(fsPtr, *(double*)bytes);
+                        FireMap_REM(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
                 case 13:
-                        FireMap_FLOOR(fsPtr);
+                        FireMap_FLOOR(fstPtr);
                         bytes++;
                         break;
                 //filter macros

@@ -62,8 +62,8 @@
 
 //memory writing tools, for sequences of untyped bytes
 
-#define BTools_WRITE(dest, src, n) while (n--) { \
-                *dest++ = *src++; \
+#define BTools_WRITE(dest, src, n) for (size_t i = 0; i<n; i++) { \
+                *(unsigned char*)(dest++) = *(unsigned char*)(src++); \
 }
 
 #endif
