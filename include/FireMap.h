@@ -76,7 +76,7 @@
                 } \
 } while(0)
 
-#define FireMap_FLOOR(stream, number) do { \
+#define FireMap_FLOOR(stream) do { \
                 void* reader = stream->items; \
                 void* mapper = stream->items; \
                 while (reader != stream->itemEnd) { \
