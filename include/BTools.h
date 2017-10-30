@@ -41,4 +41,29 @@
                 *(double*)bytes = db; \
 } while(0)
 
+#define BTools_UCH_LG(bytes, uch, lg) do { \
+                *(unsigned char*)(bytes++) = uch; \
+                *(long*)bytes = lg; \
+} while(0)
+
+//write and move pair tools
+
+#define BTools_UCH_DB_M(bytes, uch, db) do { \
+                *(unsigned char*)(bytes++) = uch; \
+                *(double*)bytes = db; \
+                bytes += sizeof(double); \
+} while(0)
+
+#define BTools_UCH_LG_M(bytes, uch, lg) do { \
+                *(unsigned char*)(bytes++) = uch; \
+                *(long*)bytes = lg; \
+                bytes += sizeof(long); \
+} while(0)
+
+//memory writing tools, for sequences of untyped bytes
+
+#define BTools_WRITE(dest, src, n) while (n--) { \
+                *dest++ = *src++; \
+}
+
 #endif
