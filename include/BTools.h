@@ -7,4 +7,7 @@
 
 #define BTools_PUT_U8(bytes, num) *(unsigned char*)bytes = num
 
+//puts byte unsigned and increments
+#define BTools_PUTI_U8(bytes, num) *(unsigned char*)(bytes++) = num
+
 #endif

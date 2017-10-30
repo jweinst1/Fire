@@ -68,6 +68,23 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
                         FireMap_FLOOR(fsPtr);
                         bytes++;
                         break;
+                //filter macros
+                case 14:
+                        bytes++;
+                        FireFilter_EQ(fstPtr, bytes);
+                        break;
+                case 15:
+                        bytes++;
+                        FireFilter_NOT_EQ(fstPtr, bytes);
+                        break;
+                case 16:
+                        bytes++;
+                        FireFilter_LT(fstPtr, bytes);
+                        break;
+                case 17:
+                        bytes++;
+                        FireFilter_GT(fstPtr, bytes);
+                        break;
                 default:
                         fmach->err = 1;
                         return;
