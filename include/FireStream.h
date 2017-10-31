@@ -88,7 +88,7 @@
                 size_t ilen = stream->itemEnd - stream->items; \
                 stream->items = realloc(stream->items, newSize); \
                 stream->cap = newSize; \
-                stream->end = stream->items + newSize; \
+                stream->end = stream->items + (size_t)newSize; \
                 stream->itemEnd = stream->items + ilen; \
 } while(0)
 
@@ -104,9 +104,17 @@
 
 // Sets the stream to a new range of numbers, expanding if needed and using pre-existing memory
 #define FireStream_SET_ZRNG(stream, endMark) do { \
-                FireStream_EXPAND_IF(stream, (endMark * (sizeof(double) + 1))); \
+                FireStream_EXPAND_IF(stream, ((size_t)endMark * (sizeof(double) + 1))); \
                 stream->itemEnd = stream->items; \
                 for (double i = 0; i < endMark; i++) { \
+                        FireStream_PUT_LNUM(stream, i); \
+                } \
+} while(0)
+
+#define FireStream_SET_RNG(stream, startMark, endMark) do { \
+                FireStream_EXPAND_IF(stream, ((endMark-startMark) * (sizeof(double) + 1))); \
+                stream->itemEnd = stream->items; \
+                for (double i = startMark; i < endMark; i++) { \
                         FireStream_PUT_LNUM(stream, i); \
                 } \
 } while(0)

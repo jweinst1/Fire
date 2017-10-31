@@ -105,7 +105,7 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
                         break;
                 case 22:
                         bytes++;
-                        FireStream_SET_ZRNG(fstPtr, bytes);
+                        FireStream_SET_ZRNG(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
                 default:

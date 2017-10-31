@@ -7,8 +7,10 @@
 
 #define CodeGen_ADV_WS(chPtr) while(isspace(*chPtr++))
 
+//arrow
 #define CodeGen_IS_AR(chPtr) (chPtr[0] == '-' && chPtr[1] == '>')
 
+//number start
 #define CodeGen_IS_NS(chPtr) (isdigit(*chPtr) || *chPtr == '-')
 
 //increments char* until arrow is found
