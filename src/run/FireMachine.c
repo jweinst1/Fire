@@ -103,6 +103,11 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
                         bytes++;
                         FireFilter_GT(fstPtr, bytes);
                         break;
+                case 22:
+                        bytes++;
+                        FireStream_SET_ZRNG(fstPtr, bytes);
+                        bytes += sizeof(double);
+                        break;
                 default:
                         fmach->err = 1;
                         return;

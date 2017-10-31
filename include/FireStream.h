@@ -102,6 +102,15 @@
                 } \
 } while(0)
 
+// Sets the stream to a new range of numbers, expanding if needed and using pre-existing memory
+#define FireStream_SET_ZRNG(stream, endMark) do { \
+                FireStream_EXPAND_IF(stream, (endMark * (sizeof(double) + 1))); \
+                stream->itemEnd = stream->items; \
+                for (double i = 0; i < endMark; i++) { \
+                        FireStream_PUT_LNUM(stream, i); \
+                } \
+} while(0)
+
 // unchecked method of simply adding a byte to the current itemEnd ptr.
 #define FireStream_PUT(stream, byte) *(unsigned char*)(stream->itemEnd++) = byte
 
