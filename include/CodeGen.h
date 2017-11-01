@@ -2,10 +2,24 @@
 #define FIRE_CODE_GEN_H
 //This header contains tools to generate bytecode directly from source code
 
+#include <stdlib.h>
 #include <ctype.h>
 #include "ByteBuffer.h"
 
-#define CodeGen_ADV_WS(chPtr) while(isspace(*chPtr++))
+enum GenState
+{
+        GenState_AccProc,
+        GenState_AccVal
+};
+
+typedef enum GenState GenState;
+
+#define CodeGen_ADV_WS(chPtr) while(isspace(*chPtr)) chPtr++
+
+#define CodeGen_ADV_SPC(chPtr) while(*chPtr++ == ' ')
+
+//advance until newline
+#define CodeGen_ADVU_NL(chPtr) while(*chPtr != '\n') chPtr++;
 
 //arrow
 #define CodeGen_IS_AR(chPtr) (chPtr[0] == '-' && chPtr[1] == '>')
@@ -14,16 +28,24 @@
 #define CodeGen_IS_NS(chPtr) (isdigit(*chPtr) || *chPtr == '-')
 
 //increments char* until arrow is found
-#define CodeGen_PRS_AR(chPtr) while(!CodeGen_IS_AR(chPtr)) chPtr++;
+#define CodeGen_ADV_AR(chPtr) while(!CodeGen_IS_AR(chPtr)) chPtr++
 
-enum GenState
-{
-        GenState_Start,
-        GenState_AccNum,
-        GenState_AccArr
-};
+#define CodeGen_ADV_NS(chPtr) while(!CodeGen_IS_NS(chPtr)) chPtr++
 
-typedef enum GenState GenState;
+//parse out stream start, move ptr to first char after '['
+#define CodeGen_ADV_SS(chPtr) while(isspace(*chPtr) || *chPtr != '[') chPtr++
+
+//parses a stream
+#define CodeGen_PRS_S(chPtr, bbuf) do { \
+                unsigned char* instByte = NULL; \
+                size_t streamParseState = 0; \
+                CodeGen_ADV_WS(chPtr); \
+                while(!streamParseState) { \
+                        ByteBuffer_READ_INC(bbuf, instByte); \
+                } \
+} while(0)
+
+
 
 //large overhead function to generate bytecode
 void CodeGen_Generate(char* srcCode, ByteBuffer* buffer);

@@ -68,4 +68,7 @@ typedef struct ByteBuffer ByteBuffer;
                 bbuf->mark += sizeof(double); \
 } while(0)
 
+//reads one byte and increments
+#define ByteBuffer_READ_INC(bbuf, byte) byte = bbuf->mark++
+
 #endif
