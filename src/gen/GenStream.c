@@ -1,16 +1,17 @@
 #include "GenStream.h"
 
 //double char ** used for movement across functions
-void GenStream_gen(char** srcCode, ByteBuffer* bbuf)
+int GenStream_gen(char** srcCode, ByteBuffer* bbuf)
 {
+        unsigned char* bop;
+        ByteBuffer_READ_INC(bbuf, bop);
         GenStreamCheck checker;
         while(!GenStreamCheck_DONE(checker))
         {
                 switch(**srcCode)
                 {
                 case ']':
-                        //stream expression end
-                        break;
+                        return 1;
                 case ' ':
                 case '\n':
                 case '\t':
@@ -18,6 +19,8 @@ void GenStream_gen(char** srcCode, ByteBuffer* bbuf)
                         //white space
                         *srcCode += 1;
                         break;
+                case '\0':
+                        return 0; //error
                 case '0':
                 case '1':
                 case '2':
@@ -28,11 +31,19 @@ void GenStream_gen(char** srcCode, ByteBuffer* bbuf)
                 case '7':
                 case '8':
                 case '9':
-                        //num start rng.
+                        ByteBuffer_WRITE_DB(bbuf, strtod(*srcCode, srcCode));
+                        checker.foundVal = 1;
                         break;
-                case 't':
-                        //cmd expression
-                        break;
+                case 'r':
+                        if((*srcCode)[1] == 'n' && (*srcCode)[2] == 'g')
+                        {
+                                *bop = Instruction_Set_Zrange;
+                                *srcCode += 3;
+                                break;
+                        }
+                        else break;
+                default:
+                        return 0;
                 }
         }
 }

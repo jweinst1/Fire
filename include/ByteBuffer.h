@@ -35,7 +35,7 @@ typedef struct ByteBuffer ByteBuffer;
 
 #define ByteBuffer_SPACE(bbuf) (bbuf->end - bbuf->mark)
 
-#define ByteBuffer_CAP(bbuf) (bbuf->end - bbufer->bytes)
+#define ByteBuffer_CAP(bbuf) (bbuf->end - bbuf->bytes)
 
 //conditionally expands at less than 20 bytes remaining
 #define ByteBuffer_EXPAND_IF(bbuf) do { \

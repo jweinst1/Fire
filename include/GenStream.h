@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include "ByteBuffer.h"
+#include "Instructions.h"
 
 #define GenStreamCheck_DONE(gsc) (gsc.foundOp && gsc.foundVal)
 
@@ -16,6 +17,6 @@ struct GenStreamCheck
 
 typedef struct GenStreamCheck GenStreamCheck;
 
-void GenStream_gen(char** srcCode, ByteBuffer* bbuf);
+int GenStream_gen(char** srcCode, ByteBuffer* bbuf);
 
 #endif
