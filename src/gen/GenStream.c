@@ -1,6 +1,7 @@
 #include "GenStream.h"
 
-void GenStream_gen(char* srcCode, ByteBuffer* bbuf)
+//double char ** used for movement across functions
+void GenStream_gen(char** srcCode, ByteBuffer* bbuf)
 {
-
+        GenStreamCheck checker;
 }

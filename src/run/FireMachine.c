@@ -8,102 +8,102 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
         {
                 switch(*bytes)
                 {
-                case 0: // stop code
+                case Instruction_Null: // stop code
                         return;
-                case 1:
+                case Instruction_Print:
                         FireIO_PRINT(fstPtr);
                         bytes++;
                         break;
-                case 2:
+                case Instruction_Reduce_Add:
                         FireReduce_ADD(fstPtr);
                         bytes++;
                         break;
-                case 3:
+                case Instruction_Reduce_Sub:
                         FireReduce_SUB(fstPtr);
                         bytes++;
                         break;
-                case 4:
+                case Instruction_Reduce_Mul:
                         FireReduce_MUL(fstPtr);
                         bytes++;
                         break;
-                case 5:
+                case Instruction_Reduce_Div:
                         FireReduce_DIV(fstPtr);
                         bytes++;
                         break;
-                case 6:
+                case Instruction_Push_Number:
                         bytes++;
                         FireStream_PUSH_NUM(fstPtr, bytes);
                         bytes += sizeof(double);
                         break;
-                case 7:
+                case Instruction_Push_ZRange:
                         bytes++;
                         FireStream_PUSH_ZRNG(fstPtr, bytes);
                         bytes += sizeof(double);
                         break;
                 //mapping macros
-                case 8:
+                case Instruction_Map_Add:
                         bytes++;
                         FireMap_ADD(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
-                case 9:
+                case Instruction_Map_Sub:
                         bytes++;
                         FireMap_SUB(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
-                case 10:
+                case Instruction_Map_Mul:
                         bytes++;
                         FireMap_MUL(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
-                case 11:
+                case Instruction_Map_Div:
                         bytes++;
                         FireMap_DIV(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
-                case 12:
+                case Instruction_Map_Rem:
                         bytes++;
                         FireMap_REM(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);
                         break;
-                case 13:
+                case Instruction_Map_Floor:
                         FireMap_FLOOR(fstPtr);
                         bytes++;
                         break;
-                case 14:
+                case Instruction_Map_Sin:
                         FireMap_SIN(fstPtr);
                         bytes++;
                         break;
-                case 15:
+                case Instruction_Map_Cos:
                         FireMap_COS(fstPtr);
                         bytes++;
                         break;
-                case 16:
+                case Instruction_Map_Log:
                         FireMap_LOG(fstPtr);
                         bytes++;
                         break;
-                case 17:
+                case Instruction_Map_Exp:
                         FireMap_EXP(fstPtr);
                         bytes++;
                         break;
                 //filter macros
-                case 18:
+                case Instruction_Filt_Eq:
                         bytes++;
                         FireFilter_EQ(fstPtr, bytes);
                         break;
-                case 19:
+                case Instruction_Filt_Neq:
                         bytes++;
                         FireFilter_NOT_EQ(fstPtr, bytes);
                         break;
-                case 20:
+                case Instruction_Filt_Lt:
                         bytes++;
                         FireFilter_LT(fstPtr, bytes);
                         break;
-                case 21:
+                case Instruction_Filt_Gt:
                         bytes++;
                         FireFilter_GT(fstPtr, bytes);
                         break;
-                case 22:
+                case Instruction_Set_Zrange:
                         bytes++;
                         FireStream_SET_ZRNG(fstPtr, *(double*)bytes);
                         bytes += sizeof(double);

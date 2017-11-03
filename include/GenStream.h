@@ -6,7 +6,14 @@
 #include "ByteBuffer.h"
 
 
+struct GenStreamCheck
+{
+        int foundOp;
+        int foundVal;
+};
 
-void GenStream_gen(char* srcCode, ByteBuffer* bbuf);
+typedef struct GenStreamCheck GenStreamCheck;
+
+void GenStream_gen(char** srcCode, ByteBuffer* bbuf);
 
 #endif

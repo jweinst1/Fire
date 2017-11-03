@@ -3,6 +3,7 @@
 //vm header for Fire language
 
 #include "FireStream.h"
+#include "Instructions.h"
 
 #define FireMachine_MAKE_L(fm) do { \
                 FireStream_MAKE_L(fm.stream, FireStream_DEFAULT_SIZE); \
