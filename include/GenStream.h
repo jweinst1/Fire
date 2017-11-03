@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "ByteBuffer.h"
 
+#define GenStreamCheck_DONE(gsc) (gsc.foundOp && gsc.foundVal)
+
 
 struct GenStreamCheck
 {
