@@ -1,29 +1,38 @@
 #include "CodeGen.h"
+#include "GenStream.h"
 
 
-void CodeGen_GetStart(char* srcCode, ByteBuffer* buffer)
+int CodeGen_Generate(char* srcCode, ByteBuffer* buffer)
 {
-        switch(*srcCode)
-        {
-        case '[':
-                srcCode++;
-                //stream lit method
-                break;
-        default:
-                //error handling
-                break;
-        }
-}
-
-void CodeGen_Generate(char* srcCode, ByteBuffer* buffer)
-{
-        CodeGen_ADV_WS(srcCode);
         while(*srcCode)
         {
-                /*switch(*srcCode)
-                   {
+                switch(*srcCode)
+                {
+                case ' ':
+                case '\n':
+                case '\t':
+                case '\v':
+                        srcCode++; //white space
+                        break;
+                case '{':
+                        srcCode++; //reducer sym
 
-                   }*/
-                break;
+                        break;
+                case '<':
+                        if(srcCode[1] == '<')
+                        {
+
+                        }
+                        break;
+                case '[':
+                        //stream literal, concept needs refining
+                        srcCode++;
+                        //GenStream_gen(&srcCode, buffer);
+                        break;
+                default:
+                        return 0;
+                        break;
+                }
         }
+        return 1;
 }

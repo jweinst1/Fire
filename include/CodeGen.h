@@ -38,11 +38,7 @@ typedef enum GenState GenState;
 
 
 
-
-//point to delegate gen to seperate generators
-void CodeGen_GetStart(char* srcCode, ByteBuffer* buffer);
-
 //large overhead function to generate bytecode
-void CodeGen_Generate(char* srcCode, ByteBuffer* buffer);
+int CodeGen_Generate(char* srcCode, ByteBuffer* buffer);
 
 #endif
