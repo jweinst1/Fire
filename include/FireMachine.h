@@ -23,6 +23,7 @@ struct FireMachine
 
 typedef struct FireMachine FireMachine;
 
+
 void FireMachine_run(FireMachine* fmach, unsigned char* bytes);
 
 #endif

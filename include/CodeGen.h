@@ -5,11 +5,12 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "ByteBuffer.h"
+#include "Instructions.h"
 
 enum GenState
 {
         GenState_AccProc,
-        GenState_AccVal
+        GenState_AccNext
 };
 
 typedef enum GenState GenState;

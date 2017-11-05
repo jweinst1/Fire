@@ -1,14 +1,17 @@
 #include <stdio.h>
-#include "BytePack.h"
+#include "CodeGen.h"
+#include "FireMachine.h"
 
 int main( int argc, char *argv[] )
 {
-        unsigned char* buffer = calloc(901, 1);
-        BytePack_bpack(&buffer, "l", 678532);
-        for (size_t i = 0; i < 10; i++) {
-                printf("%u\n", ((unsigned char*)buffer)[i]);
+        char* code = "push 5 -> push 3 -> {+} -> out";
+        ByteBuffer buf;
+        ByteBuffer_INITL(buf);
+        FireMachine fmach;
+        FireMachine_MAKE_L(fmach);
+        CodeGen_Generate(code, &buf);
+        for (size_t i = 0; i < 40; i++) {
+                printf("%u\n", buf.bytes[i]);
         }
-        size_t f = 0;
-        BytePack_len("bbbsi", &f);
-        printf("%lu\n", f);
+        FireMachine_run(&fmach, buf.bytes);
 }
