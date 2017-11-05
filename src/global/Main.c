@@ -10,8 +10,8 @@ int main( int argc, char *argv[] )
         FireMachine fmach;
         FireMachine_MAKE_L(fmach);
         CodeGen_Generate(code, &buf);
-        for (size_t i = 0; i < 40; i++) {
+        FireMachine_run(&fmach, buf.bytes);
+        for (size_t i = 0; i < 30; i++) {
                 printf("%u\n", buf.bytes[i]);
         }
-        FireMachine_run(&fmach, buf.bytes);
 }

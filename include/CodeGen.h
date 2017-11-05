@@ -31,6 +31,7 @@ typedef enum GenState GenState;
 //increments char* until arrow is found
 #define CodeGen_ADV_AR(chPtr) while(!CodeGen_IS_AR(chPtr)) chPtr++
 
+
 #define CodeGen_ADV_NS(chPtr) while(!CodeGen_IS_NS(chPtr)) chPtr++
 
 //parse out stream start, move ptr to first char after '['

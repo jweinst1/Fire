@@ -1,6 +1,5 @@
 #include "CodeGen.h"
 #include "GenReduce.h"
-#include <stdio.h>
 
 
 int CodeGen_Generate(char* srcCode, ByteBuffer* buffer)
@@ -42,7 +41,6 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer)
                         case 'o':
                                 if(srcCode[1] == 'u' && srcCode[2] == 't')
                                 {
-                                        puts("reached out");
                                         srcCode += 3;
                                         ByteBuffer_WRITE(buffer, Instruction_Print);
                                         state = GenState_AccNext;

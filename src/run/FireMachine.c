@@ -4,6 +4,7 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
 {
         FireStream* fstPtr = &fmach->stream;
 
+
         while(*bytes)
         {
                 switch(*bytes)
