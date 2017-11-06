@@ -62,3 +62,27 @@ void Compile_repl()
                 }
         }
 }
+
+void Compile_help()
+{
+        puts("The Fire Programming Language Guide");
+        puts("-----------------------------------");
+        puts("Fire is a reactive, stream based language, you program");
+        puts("in a data flow consisting of operations and ->'s.\n");
+        puts("** Printing Data **");
+        puts("@ out: prints the current stream and it's data.");
+        puts("- ex: push 5 -> push 1 -> out\n result: [5 1 ]\n");
+        puts("** Adding Data **");
+        puts("@ push (number): pushes one number onto end of stream.");
+        puts("- ex: push 5 -> out\n result: [5 ]");
+        puts("@ rng (n): pushes a stream of numbers from zero to n onto the stream.");
+        puts("- ex: rng 4 -> out\n result: [0 1 2 3 ]\n");
+        puts("** Reducing Data **");
+        puts("@ {+}: Sums all the numbers in the stream and store the result at the front.");
+        puts("- ex: rng 4 -> {+} -> out\n result: [6 ]");
+        puts("@ {-}: Subtracts all the numbers in the stream and store the result at the front.");
+        puts("- ex:");
+        puts("fire> rng 4 -> out -> {-} -> out\n[0 1 2 3 ]\n[-6 ]");
+        puts("@ {*}: Multiplies all the numbers in the stream and store the result at the front.");
+        puts("@ {/}: Divides all the numbers in the stream and store the result at the front.");
+}

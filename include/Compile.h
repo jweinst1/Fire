@@ -18,6 +18,8 @@ void Compile_sCompile(char* source);
 //begins an interactive repl loop
 void Compile_repl();
 
+//help function for printing help instructions
+void Compile_help();
 
 
 #endif
