@@ -41,6 +41,6 @@ typedef enum GenState GenState;
 
 
 //large overhead function to generate bytecode
-int CodeGen_Generate(char* srcCode, ByteBuffer* buffer);
+int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state);
 
 #endif

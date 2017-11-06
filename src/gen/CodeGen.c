@@ -2,12 +2,11 @@
 #include "GenReduce.h"
 
 
-int CodeGen_Generate(char* srcCode, ByteBuffer* buffer)
+int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
 {
-        GenState state = GenState_AccProc;
         while(*srcCode)
         {
-                switch(state)
+                switch(*state)
                 {
                 case GenState_AccProc:
                         switch(*srcCode)
@@ -21,7 +20,7 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer)
                         case '{':
                                 srcCode++; //reducer sym
                                 if(!GenReduce_gen(&srcCode, buffer)) return 0;
-                                state = GenState_AccNext;
+                                *state = GenState_AccNext;
                                 break;
                         case 'p':
                                 if(srcCode[1] == 'u' && srcCode[2] == 's' && srcCode[3] == 'h')
@@ -31,7 +30,7 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer)
                                         if(isdigit(*srcCode) || *srcCode == '-')
                                         {
                                                 ByteBuffer_WRITE_BDB(buffer, Instruction_Push_Number, strtod(srcCode, &srcCode));
-                                                state = GenState_AccNext;
+                                                *state = GenState_AccNext;
                                                 break;
                                         }
                                         else return 0; //error
@@ -43,11 +42,75 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer)
                                 {
                                         srcCode += 3;
                                         ByteBuffer_WRITE(buffer, Instruction_Print);
-                                        state = GenState_AccNext;
+                                        *state = GenState_AccNext;
                                         break;
                                 }
                                 else return 0;
                                 break;
+                        case 'r':
+                                if(srcCode[1] == 'n' && srcCode[2] == 'g')
+                                {
+                                        srcCode += 3;
+                                        CodeGen_ADV_WS(srcCode);
+                                        if(isdigit(*srcCode) || *srcCode == '-')
+                                        {
+                                                ByteBuffer_WRITE_BDB(buffer, Instruction_Push_ZRange, strtod(srcCode, &srcCode));
+                                                *state = GenState_AccNext;
+                                                break;
+                                        }
+                                        else return 0; //error
+                                }
+                                break;
+                        case '+':
+                                srcCode++;
+                                CodeGen_ADV_WS(srcCode);
+                                if(isdigit(*srcCode) || *srcCode == '-')
+                                {
+                                        ByteBuffer_WRITE_BDB(buffer, Instruction_Map_Add, strtod(srcCode, &srcCode));
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0; //error
+                        case '-':
+                                srcCode++;
+                                CodeGen_ADV_WS(srcCode);
+                                if(isdigit(*srcCode) || *srcCode == '-')
+                                {
+                                        ByteBuffer_WRITE_BDB(buffer, Instruction_Map_Sub, strtod(srcCode, &srcCode));
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0;  //error
+                        case '*':
+                                srcCode++;
+                                CodeGen_ADV_WS(srcCode);
+                                if(isdigit(*srcCode) || *srcCode == '-')
+                                {
+                                        ByteBuffer_WRITE_BDB(buffer, Instruction_Map_Mul, strtod(srcCode, &srcCode));
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0;         //error
+                        case '/':
+                                srcCode++;
+                                CodeGen_ADV_WS(srcCode);
+                                if(isdigit(*srcCode) || *srcCode == '-')
+                                {
+                                        ByteBuffer_WRITE_BDB(buffer, Instruction_Map_Div, strtod(srcCode, &srcCode));
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0;         //error
+                        case '%':
+                                srcCode++;
+                                CodeGen_ADV_WS(srcCode);
+                                if(isdigit(*srcCode) || *srcCode == '-')
+                                {
+                                        ByteBuffer_WRITE_BDB(buffer, Instruction_Map_Rem, strtod(srcCode, &srcCode));
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0;         //error
                         default:
                                 return 0;
                                 break;
@@ -58,7 +121,7 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer)
                         if(srcCode[0] == '-' && srcCode[1] == '>')
                         {
                                 srcCode += 2;
-                                state = GenState_AccProc;
+                                *state = GenState_AccProc;
                                 break;
                         }
                         else return 0;
