@@ -1,5 +1,6 @@
 #include "CodeGen.h"
 #include "GenReduce.h"
+#include "GenFilter.h"
 
 
 int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
@@ -111,6 +112,46 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                         break;
                                 }
                                 else return 0;         //error
+                        case 'l':
+                                if(srcCode[1] == 'o' && srcCode[2] == 'g')
+                                {
+                                        srcCode += 3;
+                                        ByteBuffer_WRITE(buffer, Instruction_Map_Log);
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0;
+                                break;
+                        case 'e':
+                                if(srcCode[1] == 'x' && srcCode[2] == 'p')
+                                {
+                                        srcCode += 3;
+                                        ByteBuffer_WRITE(buffer, Instruction_Map_Exp);
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0;
+                                break;
+                        case 'f':
+                                if(srcCode[1] == 'l' && srcCode[2] == 'o' && srcCode[3] == 'o' && srcCode[4] == 'r' )
+                                {
+                                        srcCode += 5;
+                                        ByteBuffer_WRITE(buffer, Instruction_Map_Floor);
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0;
+                                break;
+                        case 'i':
+                                if(srcCode[1] == 'f')
+                                {
+                                        srcCode += 2;
+                                        if(!GenFilter_gen(&srcCode, buffer)) return 0;
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0;
+                                break;
                         default:
                                 return 0;
                                 break;
