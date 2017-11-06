@@ -91,18 +91,22 @@ void FireMachine_run(FireMachine* fmach, unsigned char* bytes)
                 case Instruction_Filt_Eq:
                         bytes++;
                         FireFilter_EQ(fstPtr, bytes);
+                        bytes += sizeof(double);
                         break;
                 case Instruction_Filt_Neq:
                         bytes++;
                         FireFilter_NOT_EQ(fstPtr, bytes);
+                        bytes += sizeof(double);
                         break;
                 case Instruction_Filt_Lt:
                         bytes++;
                         FireFilter_LT(fstPtr, bytes);
+                        bytes += sizeof(double);
                         break;
                 case Instruction_Filt_Gt:
                         bytes++;
                         FireFilter_GT(fstPtr, bytes);
+                        bytes += sizeof(double);
                         break;
                 case Instruction_Set_Zrange:
                         bytes++;

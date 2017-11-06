@@ -152,6 +152,26 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                 }
                                 else return 0;
                                 break;
+                        case 's':
+                                if(srcCode[1] == 'i' && srcCode[2] == 'n')
+                                {
+                                        srcCode += 3;
+                                        ByteBuffer_WRITE(buffer, Instruction_Map_Sin);
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0;
+                                break;
+                        case 'c':
+                                if(srcCode[1] == 'o' && srcCode[2] == 's')
+                                {
+                                        srcCode += 3;
+                                        ByteBuffer_WRITE(buffer, Instruction_Map_Cos);
+                                        *state = GenState_AccNext;
+                                        break;
+                                }
+                                else return 0;
+                                break;
                         default:
                                 return 0;
                                 break;
