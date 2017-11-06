@@ -9,6 +9,9 @@
 //compiles a string of Fire source code once.
 void Compile_compile(char* source);
 
+//compiles a string of Fire source code with a singular static state
+void Compile_sCompile(char* source);
+
 
 
 
