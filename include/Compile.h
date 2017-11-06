@@ -6,12 +6,17 @@
 #include "CodeGen.h"
 #include "FireMachine.h"
 
+#define Compile_PROMPT "fire> "
+#define Compile_REPL_BSIZE 500
+
 //compiles a string of Fire source code once.
 void Compile_compile(char* source);
 
 //compiles a string of Fire source code with a singular static state
 void Compile_sCompile(char* source);
 
+//begins an interactive repl loop
+void Compile_repl();
 
 
 

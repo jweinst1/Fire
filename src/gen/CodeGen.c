@@ -1,6 +1,7 @@
 #include "CodeGen.h"
 #include "GenReduce.h"
 #include "GenFilter.h"
+#include <stdio.h>
 
 
 int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
@@ -141,6 +142,7 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                         break;
                                 }
                                 else return 0;
+
                                 break;
                         case 'i':
                                 if(srcCode[1] == 'f')
@@ -173,6 +175,7 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                 else return 0;
                                 break;
                         default:
+                                printf("Invalid at char %c\n", *srcCode);
                                 return 0;
                                 break;
                         }
@@ -185,7 +188,11 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                 *state = GenState_AccProc;
                                 break;
                         }
-                        else return 0;
+                        else if(!srcCode[0]) return 1;
+                        else {
+                                printf("Invalid char %c while looking for ->\n", *srcCode);
+                                return 0;
+                        }
                         break;
                 }
 

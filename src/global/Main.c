@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <string.h>
 #include "Compile.h"
 
 int main( int argc, char *argv[] )
 {
-        char* code = "rng 12 -> if > 3 -> sin -> floor -> out";
-        Compile_sCompile(code);
-        Compile_sCompile("-> out");
+        if(argc == 2)
+        {
+                if(!strcmp("-i", argv[1])) Compile_repl();
+        }
 }
