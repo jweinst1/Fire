@@ -30,6 +30,8 @@ fire> exit
 The first Fire development build is complete, with a limited set of functionality.
 This build is highly subject to changes in syntax and architecture.
 
+Many, many more features are planned to be added before version 1.
+
 ## Usage
 
 Fire's compiler is written in C and highly portable to almost any platform.
