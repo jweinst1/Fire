@@ -196,4 +196,8 @@ struct FireStream
 
 typedef struct FireStream FireStream;
 
+
+// creates a stream from a pointer using default size.
+void FireStream_Make(FireStream* stream);
+
 #endif
