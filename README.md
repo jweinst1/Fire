@@ -47,11 +47,15 @@ fire> exit
 
 ## Language Guide
 
-### Printing Data 
+### Printing Data
 -----------------------------------
-@ out: prints the current stream and it's data.
-- ex: push 5 -> push 1 -> out
- result: [5 1 ]
+###### out:
+prints the current stream and it's data.
+
+```
+fire> push 5 -> push 1 -> out
+[5 1 ]
+```
 
 ** Adding Data **
 -----------------------------------
