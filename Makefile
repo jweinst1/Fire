@@ -9,6 +9,8 @@ OBJ_FILES := $(patsubst src/%,lib/%,$(C_FILES:.c=.o))
 LD_FLAGS :=
 CC_FLAGS := -c -Wall -I$(INC_DIR)
 
+all: bin/Fire
+
 bin/Fire: $(OBJ_FILES) ; $(CC) $(LD_FLAGS) -o $@ $^
 
 lib/%.o: src/%.c

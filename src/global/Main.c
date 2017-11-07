@@ -12,13 +12,13 @@ int main( int argc, char *argv[] )
                 {
                         puts("Invalid command line arguments.");
                         puts("-i : Starts the interactive REPL.");
-                        puts("-h : Opens the help guide.")
+                        puts("-h : Opens the help guide.");
                 }
         }
         else
         {
                 puts("Invalid command line arguments.");
                 puts("-i : Starts the interactive REPL.");
-                puts("-h : Opens the help guide.")
+                puts("-h : Opens the help guide.");
         }
 }

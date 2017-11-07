@@ -68,7 +68,8 @@ void Compile_help()
         puts("\nThe Fire Programming Language Guide");
         puts("-----------------------------------");
         puts("Fire is a reactive, stream based language, you program");
-        puts("in a data flow consisting of operations and ->'s.\n");
+        puts("in a data flow consisting of operations and ->'s.");
+        puts("@ exit: Type exit in the repl to exit the program.\n");
         puts("** Printing Data **");
         puts("-----------------------------------");
         puts("@ out: prints the current stream and it's data.");
