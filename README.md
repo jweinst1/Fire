@@ -49,7 +49,7 @@ fire> exit
 
 ### Printing Data
 -----------------------------------
-###### out:
+##### out:
 prints the current stream and it's data.
 
 ```
@@ -57,35 +57,61 @@ fire> push 5 -> push 1 -> out
 [5 1 ]
 ```
 
-** Adding Data **
+### Adding Data
 -----------------------------------
-@ push (number): pushes one number onto end of stream.
-- ex: push 5 -> out
- result: [5 ]
-@ rng (n): pushes a stream of numbers from zero to n onto the stream.
-- ex: rng 4 -> out
- result: [0 1 2 3 ]
+##### push (number):
+pushes one number onto end of stream.
 
-** Reducing Data **
+```
+fire> push 3 -> push 1 -> out
+[3 1 ]
+```
+
+##### rng (n):
+pushes a stream of numbers from zero to n onto the stream.
+
+```
+fire> rng 5 -> push 4 -> out
+[0 1 2 3 4 4 ]
+```
+
+### Reducing Data
 -----------------------------------
-@ {+}: Sums all the numbers in the stream and store the result at the front.
-- ex: rng 4 -> {+} -> out
- result: [6 ]
-@ {-}: Subtracts all the numbers in the stream and store the result at the front.
-- ex:
+##### `{+}`:
+Sums all the numbers in the stream and store the result at the front.
+
+```
+fire> rng 4 -> {+} -> out
+[6 ]
+```
+
+##### `{-}`:
+Subtracts all the numbers in the stream and store the result at the front.
+
+```
 fire> rng 4 -> out -> {-} -> out
 [0 1 2 3 ]
 [-6 ]
-@ {*}: Multiplies all the numbers in the stream and store the result at the front.
-@ {/}: Divides all the numbers in the stream and store the result at the front.
+```
 
-** Mapping Data **
+##### `{*}`:
+Multiplies all the numbers in the stream and store the result at the front.
+
+##### `{/}`:
+Divides all the numbers in the stream and store the result at the front.
+
+
+### Mapping Data
 -----------------------------------
-@ + (number): Adds some number to all numbers in the stream.
-- ex:
+##### `+` (number):
+Adds some number to all numbers in the stream.
+
+```
 fire> rng 4 -> out -> + 2 -> out
 [0 1 2 3 ]
 [2 3 4 5 ]
+```
+
 @ - (number): Subtracts some number from all numbers in the stream.
 @ * (number): Multiplies each number in the stream.
 @ / (number): Divides each number in the stream.
@@ -100,7 +126,7 @@ fire> rng 6 -> sin -> out -> floor -> out
 @ log: Calculates and maps the log(e) of each number in the stream
 @ exp: Calculates and maps the (e)exp power of each number in the stream
 
-** Filtering Data **
+### Filtering Data
 -----------------------------------
 All filtering expressions in Fire begin with an 'if' keyword.
  Any element in the stream which holds false for the expression is removed from the string.
