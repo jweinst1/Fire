@@ -47,7 +47,8 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                         *state = GenState_AccNext;
                                         break;
                                 }
-                                else return 0;
+                                printf("Invalid at keyword %c%c%c\n", srcCode[0], srcCode[1], srcCode[2]);
+                                return 0;
                                 break;
                         case 'r':
                                 if(srcCode[1] == 'n' && srcCode[2] == 'g')
@@ -62,6 +63,8 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                         }
                                         else return 0; //error
                                 }
+                                printf("Invalid at keyword %c%c%c\n", srcCode[0], srcCode[1], srcCode[2]);
+                                return 0;
                                 break;
                         case '+':
                                 srcCode++;
@@ -121,7 +124,8 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                         *state = GenState_AccNext;
                                         break;
                                 }
-                                else return 0;
+                                printf("Invalid at keyword %c%c%c\n", srcCode[0], srcCode[1], srcCode[2]);
+                                return 0;
                                 break;
                         case 'e':
                                 if(srcCode[1] == 'x' && srcCode[2] == 'p')
@@ -131,7 +135,8 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                         *state = GenState_AccNext;
                                         break;
                                 }
-                                else return 0;
+                                printf("Invalid at keyword %c%c%c\n", srcCode[0], srcCode[1], srcCode[2]);
+                                return 0;
                                 break;
                         case 'f':
                                 if(srcCode[1] == 'l' && srcCode[2] == 'o' && srcCode[3] == 'o' && srcCode[4] == 'r' )
@@ -141,8 +146,8 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                         *state = GenState_AccNext;
                                         break;
                                 }
-                                else return 0;
-
+                                printf("Invalid at keyword %c%c%c\n", srcCode[0], srcCode[1], srcCode[2]);
+                                return 0;
                                 break;
                         case 'i':
                                 if(srcCode[1] == 'f')
@@ -152,7 +157,8 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                         *state = GenState_AccNext;
                                         break;
                                 }
-                                else return 0;
+                                printf("Invalid at keyword %c%c%c\n", srcCode[0], srcCode[1], srcCode[2]);
+                                return 0;
                                 break;
                         case 's':
                                 if(srcCode[1] == 'i' && srcCode[2] == 'n')
@@ -162,7 +168,8 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                         *state = GenState_AccNext;
                                         break;
                                 }
-                                else return 0;
+                                printf("Invalid at keyword %c%c%c\n", srcCode[0], srcCode[1], srcCode[2]);
+                                return 0;
                                 break;
                         case 'c':
                                 if(srcCode[1] == 'o' && srcCode[2] == 's')
@@ -172,7 +179,8 @@ int CodeGen_Generate(char* srcCode, ByteBuffer* buffer, GenState* state)
                                         *state = GenState_AccNext;
                                         break;
                                 }
-                                else return 0;
+                                printf("Invalid at keyword %c%c%c\n", srcCode[0], srcCode[1], srcCode[2]);
+                                return 0;
                                 break;
                         default:
                                 printf("Invalid at char %c\n", *srcCode);

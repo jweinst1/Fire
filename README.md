@@ -8,6 +8,23 @@ Fire is a programming language based around the concepts of reactive programming
 
 Since Fire does not use nested structures, it can be translated directly into byte code, without any parsing, abstract syntax trees, or any of the other features a traditional compiler needs to run code. Fire also doesn't have a virtual machine, the bytecode is used to call methods directly on a binary stream.
 
+ **Example Structure**
+
+```
+fire> rng 88 -> if > 40 -> out
+[41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 ]
+fire> -> sin -> floor -> out
+[-1 -1 -1 0 0 0 0 -1 -1 -1 0 0 0 -1 -1 -1 0 0 0 -1 -1 -1 0 0 0 -1 -1 -1 -1 0 0 0 -1 -1 -1 0 0 0 -1 -1 -1 0 0 0 -1 -1 -1 ]
+fire> -> + 50 -> out
+[49 49 49 50 50 50 50 49 49 49 50 50 50 49 49 49 50 50 50 49 49 49 50 50 50 49 49 49 49 50 50 50 49 49 49 50 50 50 49 49 49 50 50 50 49 49 49 ]
+fire> -> {/}   
+fire> -> out
+[0.000000 ]
+fire> -> floor -> out
+[0 ]
+fire> exit
+```
+
 ## Status
 
 The first Fire development build is complete, with a limited set of functionality.
