@@ -143,3 +143,10 @@ int BytePack_bpack(unsigned char** buf, const char* fmt, ...)
         va_end(pargs);
         return 1;
 }
+
+unsigned char* BytePack_create(const char* fmt)
+{
+        size_t bufsize = 0;
+        BytePack_len(fmt, &bufsize);
+        return malloc(bufsize * sizeof(unsigned char));
+}

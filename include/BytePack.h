@@ -14,4 +14,7 @@ int BytePack_pack(void* buf, const char* fmt, ...);
 //after packing is finished
 int BytePack_bpack(unsigned char** buf, const char* fmt, ...);
 
+//creates buffer from size of fmt
+unsigned char* BytePack_create(const char* fmt);
+
 #endif
