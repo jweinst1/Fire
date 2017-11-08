@@ -183,8 +183,12 @@
 } while(0)
 
 
+#define FireStream_reall_check(ptr, newSize) if((ptr = realloc(ptr, newSize)) == NULL) { \
+                return 0; \
+}
 
 
+// struct to represent Fire's Stream
 
 struct FireStream
 {
@@ -197,7 +201,59 @@ struct FireStream
 typedef struct FireStream FireStream;
 
 
+// returns the length in bytes of the elements in the stream.
+static inline size_t
+FireStream_len(FireStream* stream)
+{
+        return stream->itemEnd - stream->items;
+}
+
+// returns the space remaining in the stream.
+static inline size_t
+FireStream_space(FireStream* stream)
+{
+        return stream->end - stream->itemEnd;
+}
+
+// Checks if the stream can fit some size of data.
+static inline int
+FireStream_fits(FireStream* stream, size_t size)
+{
+        return FireStream_space(stream) > size;
+}
+
+// Resets the write head of the stream to the beginning, allowing reusage of existing memory.
+// This saves reallocation of memory during mapping, filtering, etc.
+static inline void
+FireStream_reset(FireStream* stream)
+{
+        stream->itemEnd = stream->items;
+}
+
+static inline void
+FireStream_nullify(FireStream* stream)
+{
+        for(unsigned char* ptr = stream->items; ptr != stream->end; ptr++) *ptr = 0;
+}
+
+static inline int
+FireStream_expand_if(FireStream* stream, size_t size)
+{
+        if(FireStream_space(stream) < size) FireStream_expand(stream, size);
+}
+
+// expands the stream to a newsize, returns 0 if realloc failure
+int FireStream_expand(FireStream* stream, size_t newSize);
+
+//expands to twice the current size.
+int FireStream_expand_2x(FireStream* stream);
+
 // creates a stream from a pointer using default size.
-void FireStream_Make(FireStream* stream);
+void FireStream_make(FireStream* stream);
+
+//creates a stream with custom size.
+void FireStream_make_size(FireStream* stream, size_t size);
+
+void FireStream_free(FireStream* stream);
 
 #endif
