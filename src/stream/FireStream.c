@@ -4,19 +4,21 @@
 int FireStream_expand(FireStream* stream, size_t newSize)
 {
         size_t ilen = FireStream_len(stream);
-        if(stream->items = realloc(stream->items, newSize)) return 0;
+        FireStream_reall_check(stream->items, newSize);
         stream->cap = newSize;
         stream->end = stream->items + newSize;
         stream->itemEnd = stream->items + ilen;
+        return 1;
 }
 
 int FireStream_expand_2x(FireStream* stream)
 {
         size_t ilen = FireStream_len(stream);
-        if(stream->items = realloc(stream->items, (stream->cap * 2))) return 0;
+        FireStream_reall_check(stream->items, (stream->cap * 2));
         stream->cap *= 2;
         stream->end = stream->items + stream->cap;
         stream->itemEnd = stream->items + ilen;
+        return 1;
 }
 
 void FireStream_make(FireStream* stream)
