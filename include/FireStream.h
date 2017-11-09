@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdarg.h>
 
 #include "FireTypes.h"
 #include "FireMap.h"
@@ -194,5 +195,88 @@ FireStream_write_dbl(FireStream* stream, double num)
         *(double*)(stream->itemEnd) = num;
         stream->itemEnd += sizeof(double);
 }
+
+// copies contents of stream to a void*
+static inline void
+FireStream_copy(FireStream* stream, void* dst)
+{
+        memcpy(dst, stream->items, FireStream_len(stream));
+}
+
+//writes or "packs" a series of variadic arguments into the binary stream
+int FireStream_write_fmt(FireStream* stream, const char* fmt, ...);
+
+// gets the ptr at some offset, bound checked.
+static inline void*
+FireStream_get_at_off(FireStream* stream, size_t offset)
+{
+        if(offset < FireStream_len(stream)) return stream->items + offset;
+        else return NULL;
+}
+
+static inline void
+FireStream_set_buf(FireStream* stream, void** buf)
+{
+        *buf = stream->items;
+}
+
+//reads one u8 from the stream
+static inline void
+FireStream_read_u8(FireStream* stream, uint8_t* ptr)
+{
+        *ptr = *(uint8_t*)(stream->items);
+}
+
+//reads one u8 from the stream at some offset
+static inline void
+FireStream_read_u8_at(FireStream* stream, uint8_t* ptr, size_t offset)
+{
+        *ptr = *(uint8_t*)(stream->items + offset);
+}
+
+//reads one i8 from the stream
+static inline void
+FireStream_read_i8(FireStream* stream, int8_t* ptr)
+{
+        *ptr = *(int8_t*)(stream->items);
+}
+
+//reads one i8 from the stream
+static inline void
+FireStream_read_i8_at(FireStream* stream, int8_t* ptr, size_t offset)
+{
+        *ptr = *(int8_t*)(stream->items + offset);
+}
+
+//reads one dbl from the stream
+static inline void
+FireStream_read_dbl(FireStream* stream, double* ptr)
+{
+        *ptr = *(double*)(stream->items);
+}
+
+//reads one dbl from the stream at an offset
+static inline void
+FireStream_read_dbl_at(FireStream* stream, double* ptr, size_t offset)
+{
+        *ptr = *(double*)(stream->items + offset);
+}
+
+//read a specified amount of bytes into a buffer
+static inline void
+FireStream_read_n(FireStream* stream, void* buf, size_t size)
+{
+        memcpy(buf, stream->items, size);
+}
+
+//read n bytes from stream into buf at some offset.
+static inline void
+FireStream_read_n_at(FireStream* stream, void* buf, size_t size, size_t offset)
+{
+        memcpy(buf, stream->items + offset, size);
+}
+
+
+
 
 #endif

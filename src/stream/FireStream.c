@@ -45,3 +45,36 @@ void FireStream_free(FireStream* stream)
         stream->end = NULL;
         stream->cap = 0;
 }
+
+int FireStream_write_fmt(FireStream* stream, const char* fmt, ...)
+{
+        va_list pargs;
+        va_start(pargs, fmt);
+        while(*fmt)
+        {
+                switch(*fmt)
+                {
+                case 'b':
+                        FireStream_write_u8(stream, va_arg(pargs, int));
+                        break;
+                case 'i':
+                        FireStream_write_i32(stream, va_arg(pargs, int32_t));
+                        break;
+                case 'l':
+                        FireStream_write_i64(stream, va_arg(pargs, int64_t));
+                        break;
+                case 'd':
+                        FireStream_write_dbl(stream, va_arg(pargs, double));
+                        break;
+                case 'c':
+                        FireStream_write_i8(stream, va_arg(pargs, int));
+                        break;
+                default:
+                        va_end(pargs);
+                        return 0; //error
+                }
+                fmt++;
+        }
+        va_end(pargs);
+        return 1;
+}
