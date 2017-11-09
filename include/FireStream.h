@@ -276,6 +276,22 @@ FireStream_read_n_at(FireStream* stream, void* buf, size_t size, size_t offset)
         memcpy(buf, stream->items + offset, size);
 }
 
+static inline int
+FireStream_is_empty(FireStream* stream)
+{
+        return stream->items == stream->itemEnd;
+}
+
+//returns percentage of capacity used, for optimization
+static inline double
+FireStream_cap_used(FireStream* stream)
+{
+        return (double)(stream->itemEnd - stream->items)/(double)(stream->cap);
+}
+
+//reads a certain number of elements from format to buf.
+int FireStream_read_fmt(FireStream* stream, void* buf, const char* fmt);
+
 
 
 

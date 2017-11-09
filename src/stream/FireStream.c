@@ -78,3 +78,26 @@ int FireStream_write_fmt(FireStream* stream, const char* fmt, ...)
         va_end(pargs);
         return 1;
 }
+
+int FireStream_read_fmt(FireStream* stream, void* buf, const char* fmt)
+{
+        void* reader = stream->items;
+        while(*fmt)
+        {
+                switch(*fmt)
+                {
+                case 'b':
+                        *(uint8_t*)buf = *(uint8_t*)reader;
+                        reader += sizeof(uint8_t);
+                        break;
+                case 'i':
+                case 'l':
+                case 'd':
+                case 'c':
+                default:
+                        return 0; //error in fmt
+                }
+                fmt++;
+        }
+        return 1;
+}
