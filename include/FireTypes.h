@@ -1,6 +1,28 @@
 #ifndef FIRE_TYPES_H
 #define FIRE_TYPES_H
+// header that contains types
 
-#define FireStream_TYPE_NUM 1
+//denotes the max integer that can represent a binary type
+#define FireType_MAX 1
+
+enum FireType
+{
+        FireType_null, //not a true type, denotes null byte or non-type
+        FireType_Number
+};
+
+typedef enum FireType FireType;
+
+static inline int
+FireType_is_type(unsigned int type)
+{
+        return type <= FireType_MAX;
+}
+
+static inline void
+FireType_write(void* buf, Firetype type)
+{
+        *(unsigned char*)buf = type;
+}
 
 #endif
