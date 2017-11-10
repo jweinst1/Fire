@@ -91,9 +91,21 @@ int FireStream_read_fmt(FireStream* stream, void* buf, const char* fmt)
                         reader += sizeof(uint8_t);
                         break;
                 case 'i':
+                        *(int32_t*)buf = *(int32_t*)reader;
+                        reader += sizeof(int32_t);
+                        break;
                 case 'l':
+                        *(int64_t*)buf = *(int64_t*)reader;
+                        reader += sizeof(int64_t);
+                        break;
                 case 'd':
+                        *(double*)buf = *(double*)reader;
+                        reader += sizeof(double);
+                        break;
                 case 'c':
+                        *(int8_t*)buf = *(int8_t*)reader;
+                        reader += sizeof(int8_t);
+                        break;
                 default:
                         return 0; //error in fmt
                 }
