@@ -8,9 +8,6 @@
 #include <stdarg.h>
 
 #include "FireTypes.h"
-#include "FireMap.h"
-#include "FireFilter.h"
-#include "FireReduce.h"
 #include "FireIO.h"
 
 /*****Fire Stream Header******/

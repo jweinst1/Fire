@@ -20,7 +20,7 @@ FireType_is_type(unsigned int type)
 }
 
 static inline void
-FireType_write(void* buf, Firetype type)
+FireType_write(void* buf, FireType type)
 {
         *(unsigned char*)buf = type;
 }
