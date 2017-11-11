@@ -5,13 +5,25 @@
 #include <stdio.h>
 #include "FireStream.h"
 
-//declaration for inclusion in firestream file
-struct FireStream;
-typedef struct FireStream FireStream;
+//declaration macro for inclusion in firestream file
+FireStream_DECLARE
 
 
 
 //prints the binary reprsentation of the stream.
-void FireIO_print_binary(FireStream* stream);
+
+static inline void
+FireIO_print_binary(FireStream* stream)
+{
+        for(unsigned char* ptr = stream->items; ptr != stream->itemEnd; ptr++) printf("%u", *ptr);
+}
+
+static inline void
+FireIO_print_binary_lines(FireStream* stream)
+{
+        for(unsigned char* ptr = stream->items; ptr != stream->itemEnd; ptr++) printf("%u\n", *ptr);
+}
+
+int FireIO_print_stream(FireStream* stream);
 
 #endif

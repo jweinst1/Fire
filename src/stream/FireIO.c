@@ -1,10 +1,24 @@
 #include "FireIO.h"
 
-void FireIO_print_binary(FireStream* stream)
+int FireIO_print_stream(FireStream* stream)
 {
-        unsigned char* ptr = stream->items;
-        while(ptr != stream->itemEnd)
+        unsigned char* reader = stream->items;
+        printf("[ ");
+        while(reader != stream->itemEnd)
         {
-                printf("%u", *ptr++);
+                switch(*reader)
+                {
+                case FireType_null:
+                        reader++;
+                        break;
+                case FireType_Int:
+                        printf("%ld ", *(int64_t*)reader);
+                        reader += sizeof(int64_t);
+                        break;
+                default:
+                        return 0;
+                }
         }
+        puts("]");
+        return 1;
 }

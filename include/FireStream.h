@@ -7,13 +7,26 @@
 #include <stdint.h>
 #include <stdarg.h>
 
+//macro that allows other files to implement stream methods
+#define FireStream_DECLARE struct FireStream;
+
+// struct to represent Fire's Stream
+
+struct FireStream
+{
+        void* items;
+        void* itemEnd;
+        void* end;
+        size_t cap;
+};
+
+typedef struct FireStream FireStream;
+
+//stream functions and tools
 #include "FireTypes.h"
 #include "FireIO.h"
 
-/*****Fire Stream Header******/
-// Expandable buffer stream optimized for map, reduce and filter.
-// FireStream can be shortened by simply moving end of buffer back and rewriting data, or expanded.
-// FireStreams can be iterated over very quickly
+
 
 //meant to fit 100 8-bit integers by default
 #define FireStream_DEFAULT_SIZE 800
@@ -36,17 +49,9 @@
 }
 
 
-// struct to represent Fire's Stream
 
-struct FireStream
-{
-        void* items;
-        void* itemEnd;
-        void* end;
-        size_t cap;
-};
 
-typedef struct FireStream FireStream;
+
 
 
 // returns the length in bytes of the elements in the stream.

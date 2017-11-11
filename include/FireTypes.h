@@ -8,7 +8,7 @@
 enum FireType
 {
         FireType_null, //not a true type, denotes null byte or non-type
-        FireType_Number
+        FireType_Int
 };
 
 typedef enum FireType FireType;
