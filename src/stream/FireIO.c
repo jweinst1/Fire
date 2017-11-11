@@ -12,7 +12,8 @@ int FireIO_print_stream(FireStream* stream)
                         reader++;
                         break;
                 case FireType_Int:
-                        printf("%ld ", *(int64_t*)reader);
+                        reader++;
+                        printf("%lld ", *(int64_t*)reader);
                         reader += sizeof(int64_t);
                         break;
                 default:

@@ -1,24 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-#include "Compile.h"
+#include "FireStream.h"
 
 int main( int argc, char *argv[] )
 {
-        if(argc == 2)
-        {
-                if(!strcmp("-i", argv[1])) Compile_repl();
-                else if(!strcmp("-h", argv[1])) Compile_help();
-                else
-                {
-                        puts("Invalid command line arguments.");
-                        puts("-i : Starts the interactive REPL.");
-                        puts("-h : Opens the help guide.");
-                }
-        }
-        else
-        {
-                puts("Invalid command line arguments.");
-                puts("-i : Starts the interactive REPL.");
-                puts("-h : Opens the help guide.");
-        }
+        FireStream fst;
+        FireStream_make(&fst);
+        FireStream_write_fmt(&fst, "blbl", 1, 300, 1, 300);
+        FireIO_print_binary_lines(&fst);
+        FireIO_print_stream(&fst);
 }
