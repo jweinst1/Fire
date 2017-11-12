@@ -3,10 +3,7 @@
 //contains IO, like printing macros and functions
 
 #include <stdio.h>
-#include "FireStream.h"
-
-//declaration macro for inclusion in firestream file
-FireStream_DECLARE
+#include "FireStreamDef.h"
 
 
 
