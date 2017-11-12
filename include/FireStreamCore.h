@@ -22,6 +22,23 @@
                 return 0; \
 }
 
+//complete macro for condition stream expansion
+// @addspace = additional space added besides pushSize
+// @pushSize = size of object being added to stream.
+#define FireStream_EXPAND_IF(stream, pushSize, addSpace) do { \
+                if((stream->end - stream->itemEnd) < pushSize) { \
+                        size_t ilen = stream->itemEnd - stream->items; \
+                        stream->cap += pushSize + addspace; \
+                        if((stream->items = realloc(stream->items, stream->cap)) == NULL) { \
+                                fprintf(stderr, "Memory error: Memory alloc for size %lu failed, out of memory.\n", stream->cap); \
+                                exit(1); \
+                                return 0; \
+                        } \
+                        stream->end = stream->items + stream->cap; \
+                        stream->itemEnd = stream->items + ilen;  \
+                } \
+} while(0)
+
 
 // returns the length in bytes of the elements in the stream.
 static inline size_t
@@ -67,7 +84,7 @@ int FireStream_expand_2x(FireStream* stream);
 static inline void
 FireStream_expand_if(FireStream* stream, size_t size)
 {
-        if(FireStream_space(stream) < size) FireStream_expand(stream, size);
+        if(FireStream_space(stream) < size) FireStream_expand(stream, stream->cap + size);
 }
 
 static inline void
