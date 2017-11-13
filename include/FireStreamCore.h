@@ -250,6 +250,12 @@ FireStream_read_dbl_at(FireStream* stream, double* ptr, size_t offset)
         *ptr = *(double*)(stream->items + offset);
 }
 
+static inline void
+FireStream_read_all(FireStream* stream, void* buf)
+{
+        memcpy(buf, stream->items, stream->itemEnd - stream->items);
+}
+
 //read a specified amount of bytes into a buffer
 static inline void
 FireStream_read_n(FireStream* stream, void* buf, size_t size)
