@@ -28,11 +28,10 @@
 #define FireStream_EXPAND_IF(stream, pushSize, addSpace) do { \
                 if((stream->end - stream->itemEnd) < pushSize) { \
                         size_t ilen = stream->itemEnd - stream->items; \
-                        stream->cap += pushSize + addspace; \
+                        stream->cap += pushSize + addSpace; \
                         if((stream->items = realloc(stream->items, stream->cap)) == NULL) { \
                                 fprintf(stderr, "Memory error: Memory alloc for size %lu failed, out of memory.\n", stream->cap); \
                                 exit(1); \
-                                return 0; \
                         } \
                         stream->end = stream->items + stream->cap; \
                         stream->itemEnd = stream->items + ilen;  \
@@ -104,10 +103,11 @@ void FireStream_free(FireStream* stream);
 //**** Write Methods *****
 
 //function to write any type, given some known size and address
+//works for buffers, arrays, anything that can be memcpyed
 static inline void
-FireStream_write_any(FireStream* stream, void* val, size_t size)
+FireStream_write(FireStream* stream, void* val, size_t size)
 {
-        FireStream_expand_if(stream, size);
+        FireStream_EXPAND_IF(stream, size, (stream->cap*2));
         memcpy(stream->itemEnd, val, size);
         stream->itemEnd += size;
 }

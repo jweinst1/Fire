@@ -6,7 +6,6 @@ int main( int argc, char *argv[] )
 {
         FireStream fst;
         FireStream_make(&fst);
-        FireStream_int_push(&fst, 660);
-        FireIO_print_binary_lines(&fst);
-        FireIO_print_stream(&fst);
+        unsigned char code[] = {0, 1, 1};
+        FireStream_execute(&fst, code, 3);
 }

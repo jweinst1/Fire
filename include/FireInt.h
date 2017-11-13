@@ -4,6 +4,8 @@
 
 #include "FireStreamDef.h"
 
+
+
 static inline void
 FireStream_int_push(FireStream* stream, long num)
 {
