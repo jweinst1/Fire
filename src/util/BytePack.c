@@ -1,4 +1,5 @@
 #include "BytePack.h"
+#include <stdint.h>
 
 
 int BytePack_len(const char* fmt, size_t* length)
@@ -148,5 +149,5 @@ unsigned char* BytePack_create(const char* fmt)
 {
         size_t bufsize = 0;
         BytePack_len(fmt, &bufsize);
-        return malloc(bufsize * sizeof(unsigned char));
+        return calloc(1, bufsize * sizeof(unsigned char));
 }

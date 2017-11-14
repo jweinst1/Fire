@@ -6,7 +6,8 @@
 enum Instruction
 {
         Instruction_Null,
-        Instruction_Print
+        Instruction_Print,
+        Instruction_Put
 };
 
 typedef enum Instruction Instruction;

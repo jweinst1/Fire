@@ -6,6 +6,9 @@
 #include "FireTypes.h"
 #include "FireIO.h"
 #include "FireInt.h"
+#include "FirePut.h"
+
+
 
 
 //main function responsible for executing byte code

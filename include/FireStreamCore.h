@@ -161,11 +161,11 @@ FireStream_write_u32(FireStream* stream, uint32_t num)
 }
 
 static inline void
-FireStream_write_i64(FireStream* stream, int64_t num)
+FireStream_write_i64(FireStream* stream, long num)
 {
-        FireStream_expand_if(stream, sizeof(int64_t));
-        *(int64_t*)(stream->itemEnd) = num;
-        stream->itemEnd += sizeof(int64_t);
+        FireStream_expand_if(stream, sizeof(long));
+        *(long*)(stream->itemEnd) = num;
+        stream->itemEnd += sizeof(long);
 }
 
 static inline void

@@ -3,6 +3,7 @@
 //header that defines FireInt
 
 #include "FireStreamDef.h"
+#include "FireStreamCore.h"
 
 
 

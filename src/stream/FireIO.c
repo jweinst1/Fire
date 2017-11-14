@@ -1,4 +1,5 @@
 #include "FireIO.h"
+#include "FireTypes.h"
 
 int FireIO_print_stream(FireStream* stream)
 {
