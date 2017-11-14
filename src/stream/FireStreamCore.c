@@ -46,70 +46,15 @@ void FireStream_free(FireStream* stream)
         stream->cap = 0;
 }
 
-int FireStream_write_fmt(FireStream* stream, const char* fmt, ...)
+void FireStream_write(FireStream* stream, unsigned char** bytes)
 {
-        va_list pargs;
-        va_start(pargs, fmt);
-        while(*fmt)
+        switch(**bytes)
         {
-                switch(*fmt)
-                {
-                case 'b':
-                        FireStream_write_u8(stream, va_arg(pargs, int));
-                        break;
-                case 'i':
-                        FireStream_write_i32(stream, va_arg(pargs, int32_t));
-                        break;
-                case 'l':
-                        FireStream_write_i64(stream, va_arg(pargs, int64_t));
-                        break;
-                case 'd':
-                        FireStream_write_dbl(stream, va_arg(pargs, double));
-                        break;
-                case 'c':
-                        FireStream_write_i8(stream, va_arg(pargs, int));
-                        break;
-                default:
-                        va_end(pargs);
-                        return 0; //error
-                }
-                fmt++;
+        case FireType_Int:
+                *bytes += 1;
+                break;
+        default:
+                fprintf(stderr, "Byte Error, unrecognized byte %u.\n", **bytes);
+                exit(1);
         }
-        va_end(pargs);
-        return 1;
-}
-
-int FireStream_read_fmt(FireStream* stream, void* buf, const char* fmt)
-{
-        void* reader = stream->items;
-        while(*fmt)
-        {
-                switch(*fmt)
-                {
-                case 'b':
-                        *(uint8_t*)buf = *(uint8_t*)reader;
-                        reader += sizeof(uint8_t);
-                        break;
-                case 'i':
-                        *(int32_t*)buf = *(int32_t*)reader;
-                        reader += sizeof(int32_t);
-                        break;
-                case 'l':
-                        *(int64_t*)buf = *(int64_t*)reader;
-                        reader += sizeof(int64_t);
-                        break;
-                case 'd':
-                        *(double*)buf = *(double*)reader;
-                        reader += sizeof(double);
-                        break;
-                case 'c':
-                        *(int8_t*)buf = *(int8_t*)reader;
-                        reader += sizeof(int8_t);
-                        break;
-                default:
-                        return 0; //error in fmt
-                }
-                fmt++;
-        }
-        return 1;
 }
