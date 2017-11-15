@@ -27,4 +27,11 @@ void ByteWrite_rep(void* restrict dest,
                    unsigned char mark,
                    int amount);
 
+//similar to mark but moves an unsigned char* as it writes
+void ByteWrite_move(void* restrict dest,
+                    unsigned char** restrict src,
+                    size_t block,
+                    unsigned char mark,
+                    int amount);
+
 #endif
