@@ -18,10 +18,11 @@ int FireIO_print_stream(FireStream* stream)
                         reader += sizeof(int64_t);
                         break;
                 default:
+                        printf("]\n");
                         return 0;
                 }
         }
-        puts("]");
+        printf("]\n");
         return 1;
 }
 

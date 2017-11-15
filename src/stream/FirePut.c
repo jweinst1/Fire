@@ -1,5 +1,6 @@
 #include "FirePut.h"
 #include "FireStreamCore.h"
+#include "ByteWrite.h"
 
 void FirePut_put(FireStream* stream, unsigned char** code)
 {
@@ -11,14 +12,10 @@ void FirePut_put(FireStream* stream, unsigned char** code)
                 params.type = FireType_Int;
                 params.amount = *(int*)(*code);
                 *code += sizeof(int);
-                params.total = sizeof(long) * params.amount;
-                long* numptr = (void*)(*code);
-                /*while(params.amount--)
-                   {
-                        FireStream_int_push(stream, *numptr++);
-                   }*/
-                *code += params.total;
-                //printf("type is %d, amount is %d, total is %lu\n", params.type, params.amount, params.total);
+                params.total = sizeof(int64_t) * params.amount;
+                FireStream_EXPAND_IF(stream, params.total, stream->cap);
+                ByteWrite_move(stream->itemEnd, code, sizeof(int64_t), FireType_Int, params.amount);
+                stream->itemEnd += params.total;
                 break;
         default:
                 fprintf(stderr, "ByteCode Error: Type null not recognized for put op.\n");

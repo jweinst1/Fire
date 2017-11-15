@@ -53,12 +53,12 @@
 #define FireStream_MAKE(name, bufSize) \
         FireStream name; \
         if((name.items = malloc(bufSize)) == NULL) { \
-                fprintf(stderr, "Memory error: Memory alloc for size %lu failed, out of memory.\n", bufSize); \
+                fprintf(stderr, "Memory error: Memory alloc for size %lu failed, out of memory.\n", (unsigned long)bufSize); \
                 exit(1); \
         } \
         name.cap = bufSize; \
         name.end = name.items + name.cap; \
-        name.itemEnd = name.items;
+        name.itemEnd = name.items
 
 #define FireStream_FREE(stream) do { \
                 free(stream->items); \

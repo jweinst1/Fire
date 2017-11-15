@@ -2,7 +2,7 @@
 #include "Instructions.h"
 
 
-void FireStream_execute(FireStream* stream, unsigned char* code, size_t n)
+void FireStream_execute(FireStream* stream, unsigned char* code)
 {
         while(*code)
         {
