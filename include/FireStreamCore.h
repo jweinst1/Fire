@@ -16,6 +16,12 @@
 // macro calculates remaining space in stream
 #define FireStream_SPACE(stream) (stream->end - stream->itemEnd)
 
+//checks if some size fits into stream.
+#define FireStream_FITS(stream, pushSize) ((stream->end - stream->itemEnd) > pushSize)
+
+//resets stream to write at beginning
+#define FireStream_RESET(stream) stream->itemEnd = stream->items
+
 //macro to check if realloc returns null, exits program if null pointer found
 #define FireStream_reall_check(ptr, newSize) if((ptr = realloc(ptr, newSize)) == NULL) { \
                 fprintf(stderr, "Memory error: Memory alloc for size %lu failed, out of memory.\n", newSize); \
