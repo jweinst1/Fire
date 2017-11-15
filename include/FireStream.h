@@ -5,7 +5,6 @@
 #include "FireStreamCore.h"
 #include "FireTypes.h"
 #include "FireIO.h"
-#include "FireInt.h"
 #include "FirePut.h"
 
 

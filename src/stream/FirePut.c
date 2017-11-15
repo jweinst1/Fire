@@ -13,10 +13,10 @@ void FirePut_put(FireStream* stream, unsigned char** code)
                 *code += sizeof(int);
                 params.total = sizeof(long) * params.amount;
                 long* numptr = (void*)(*code);
-                while(params.amount--)
-                {
+                /*while(params.amount--)
+                   {
                         FireStream_int_push(stream, *numptr++);
-                }
+                   }*/
                 *code += params.total;
                 //printf("type is %d, amount is %d, total is %lu\n", params.type, params.amount, params.total);
                 break;

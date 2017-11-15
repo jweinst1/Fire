@@ -3,12 +3,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <stdint.h>
-#include <stdarg.h>
 
 #include "FireStreamDef.h"
-#include "Instructions.h"
 
 // macro calculates the length of stream
 #define FireStream_LEN(stream) (stream->itemEnd - stream->items)
@@ -26,7 +23,6 @@
 #define FireStream_reall_check(ptr, newSize) if((ptr = realloc(ptr, newSize)) == NULL) { \
                 fprintf(stderr, "Memory error: Memory alloc for size %lu failed, out of memory.\n", newSize); \
                 exit(1); \
-                return 0; \
 }
 
 //macro for seeing ratio of space used, for optimization.
@@ -48,97 +44,33 @@
                 } \
 } while(0)
 
+//macro to set all stream bytes to null.
+#define FireStream_NULLIFY(stream) for(unsigned char* ptr = stream->items; ptr != stream->end; ptr++) *ptr = 0
 
-// returns the length in bytes of the elements in the stream.
-static inline size_t
-FireStream_len(FireStream* stream)
-{
-        return stream->itemEnd - stream->items;
-}
+#define FireStream_SHORTEN(stream, newSize) if(newSize < (stream->itemEnd - stream->items)) stream->itemEnd = stream->items + newSize
 
-// returns the space remaining in the stream.
-static inline size_t
-FireStream_space(FireStream* stream)
-{
-        return stream->end - stream->itemEnd;
-}
+//creates a new stream in current scope with cap = bufSize
+#define FireStream_MAKE(name, bufSize) \
+        FireStream name; \
+        if((name.items = malloc(bufSize)) == NULL) { \
+                fprintf(stderr, "Memory error: Memory alloc for size %lu failed, out of memory.\n", bufSize); \
+                exit(1); \
+        } \
+        name.cap = bufSize; \
+        name.end = name.items + name.cap; \
+        name.itemEnd = name.items;
 
-// Checks if the stream can fit some size of data.
-static inline int
-FireStream_fits(FireStream* stream, size_t size)
-{
-        return FireStream_space(stream) > size;
-}
+#define FireStream_FREE(stream) do { \
+                free(stream->items); \
+                stream->items = NULL; \
+                stream->end = NULL; \
+                stream->itemEnd = NULL; \
+                stream->cap = 0; \
+} while(0)
 
-// Resets the write head of the stream to the beginning, allowing reusage of existing memory.
-// This saves reallocation of memory during mapping, filtering, etc.
-static inline void
-FireStream_reset(FireStream* stream)
-{
-        stream->itemEnd = stream->items;
-}
+#define FireStream_IS_EMPTY(stream) stream->items == stream->itemEnd
 
-static inline void
-FireStream_nullify(FireStream* stream)
-{
-        for(unsigned char* ptr = stream->items; ptr != stream->end; ptr++) *ptr = 0;
-}
-
-// expands the stream to a newsize, returns 0 if realloc failure
-int FireStream_expand(FireStream* stream, size_t newSize);
-
-//expands to twice the current size.
-int FireStream_expand_2x(FireStream* stream);
-
-static inline void
-FireStream_expand_if(FireStream* stream, size_t size)
-{
-        if(FireStream_space(stream) < size) FireStream_expand(stream, stream->cap + size);
-}
-
-static inline void
-FireStream_shorten(FireStream* stream, size_t size) {
-        if(size < FireStream_len(stream)) stream->itemEnd = stream->items + size;
-}
-
-// creates a stream from a pointer using default size.
-void FireStream_make(FireStream* stream);
-
-//creates a stream with custom size.
-void FireStream_make_size(FireStream* stream, size_t size);
-
-//frees a stream and sets the buffer to zero and NULL
-void FireStream_free(FireStream* stream);
-
-static inline int
-FireStream_is_empty(FireStream* stream)
-{
-        return stream->items == stream->itemEnd;
-}
-
-//returns percentage of capacity used, for optimization
-static inline double
-FireStream_cap_used(FireStream* stream)
-{
-        return (double)(stream->itemEnd - stream->items)/(double)(stream->cap);
-}
-
-//**** Write Methods *****
-
-//function to write any type, given some known size and address
-//works for buffers, arrays, anything that can be memcpyed
-
-
-void FireStream_write(FireStream* stream, unsigned char* bytes);
-
-
-
-
-
-
-
-
-
+#define FireStream_IS_FULL(stream) stream->itemEnd == stream->end
 
 
 

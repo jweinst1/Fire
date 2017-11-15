@@ -7,7 +7,6 @@
 
 #include "FireStreamDef.h"
 #include "FireTypes.h"
-#include "FireInt.h"
 
 struct PutParams
 {
